@@ -11,6 +11,8 @@ namespace gr8Match.Models
         public DbSet<User> Users { get; set; }
 
 
+        public DbSet<Interests> Interests { get; set; }
+
         public Gr8DbContext() : base ("Gr8db")
         {
                 
