@@ -22,3 +22,35 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#homepageJumbotron {
+    background-image: url(../Images/homepageFrontImages.jpg);
+    background-size: 100% auto;
+}
+
+    #homepageJumbotron h1, #homepageJumbotron p {
+        color: white;
+    }
+
+.catBox {
+    background-color: rgb(250, 250, 250);
+    width: 98%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    padding-top: 2em;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-bottom: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+    .catBox a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .catBox h3 {
+        text-align: center;
+    }
