@@ -188,12 +188,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\Gr8DbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Interests.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Posts.cs" />
     <Compile Include="Models\ProfileIndexViewModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Visitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
