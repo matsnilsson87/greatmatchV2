@@ -7,22 +7,18 @@ using System.Web;
 
 namespace gr8Match.Models
 {
-    public class Posts
+    public class UserInterests
     {
-       
+
         [Key]
         public int Id { get; set; }
-        public string Text { get; set; }
-        public DateTime Datum { get; set; }
-       
 
         [ForeignKey("User1")]
-        public int WrittenBy { get; set; }
+        public int User { get; set; }
         public User User1 { get; set; }
 
-        [ForeignKey("User2")]
-        public int WrittenTo { get; set; }
-        public User User2 { get; set; }
-
+        [ForeignKey("Interests")]
+        public int Interest { get; set; }
+        public Interests Interests { get; set; }
     }
 }

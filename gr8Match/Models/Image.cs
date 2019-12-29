@@ -9,10 +9,16 @@ namespace gr8Match.Models
 {
     public class Image
     {   [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string ImgPath { get; set; }
-        [ForeignKey("User")]
+        
+
+        [ForeignKey("User1")]
         public int UserId { get; set; }
+        public User User1 { get; set; }
+
+        [InverseProperty("Img")]
+        public ICollection<User> Users { get; set; }
     }
 }

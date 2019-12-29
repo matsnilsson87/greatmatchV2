@@ -9,13 +9,20 @@ namespace gr8Match.Models
 {
     public class FriendRequest
     {
+       
         [Key]
-        public int ID { get; set; }
-        [ForeignKey("User")]
-        public int User1 { get; set; }
-        [ForeignKey("User")]
-        public int User2 { get; set; }
-        public int Accepted   { get; set; }
+        public int Id { get; set; }
+
+        [ForeignKey("User1")]
+        public int FromUser { get; set; }
+        public User User1 { get; set; }
         
+        [ForeignKey("User2")]
+        public int ToUser { get; set; }
+        public User User2 { get; set; }
+
+        public bool Accepted   { get; set; }
+
+  
     }
 }
