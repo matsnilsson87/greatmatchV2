@@ -1,4 +1,8 @@
-﻿@model gr8Match.Models.User
+﻿@{
+    ViewBag.Title = "Profil Uppgifter";
+}
+
+@model gr8Match.Models.User
 
 @using Microsoft.AspNet.Identity
 @using (Html.BeginForm("AddUser", "Profile", FormMethod.Post))

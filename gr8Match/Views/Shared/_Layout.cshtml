@@ -24,8 +24,8 @@
 
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Min Profil", "myPage", "Home")</li>
-                        <li>@Html.ActionLink("Visa Profiler", "ViewUsers", "Home")</li>
+                        <li>@Html.ActionLink("Min Profil", "MyProfile", "Profile", routeValues: null, htmlAttributes: new { }))</li>
+                        <li>@Html.ActionLink("Mina Vänner", "MyFriends", "Profile", routeValues: null, htmlAttributes: new { title = "Manage" }))</li>
                     }
            
                 </ul>
