@@ -29,5 +29,15 @@ namespace gr8Match.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult MyProfile()
+        {
+            return View();
+        }
+
+        public ActionResult MyFriends()
+        {
+            return View();
+        }
     }
 }
