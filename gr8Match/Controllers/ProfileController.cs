@@ -25,12 +25,7 @@ namespace gr8Match.Controllers
             return RedirectToAction("FirstTimeProfile", "Profile");
         }
 
-        public ActionResult FirstTimeProfile()
-        {
-
-
-            return RedirectToAction("MyProfile", "Profile");
-        }
+        
 
         public ActionResult MyProfile()
         {
