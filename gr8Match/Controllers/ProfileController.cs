@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Microsoft.AspNet.Identity;
 using gr8Match.Models;
 
 namespace gr8Match.Controllers
@@ -13,12 +13,7 @@ namespace gr8Match.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var ctx = new Gr8DbContext();
-            var viewModel = new ProfileIndexViewModel
-            {
-                Users = ctx.Users.ToList()
-            };
-            return View(viewModel);
+            return View();
         }
         [HttpPost]
         public ActionResult AddUser(User model)
@@ -27,7 +22,14 @@ namespace gr8Match.Controllers
             ctx.Users.Add(model);
             ctx.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("FirstTimeProfile", "Profile");
+        }
+
+        public ActionResult FirstTimeProfile()
+        {
+
+
+            return RedirectToAction("MyProfile", "Profile");
         }
 
         public ActionResult MyProfile()
@@ -37,7 +39,14 @@ namespace gr8Match.Controllers
 
         public ActionResult MyFriends()
         {
-            return View();
+            var ctx = new Gr8DbContext();
+            var viewModel = new ProfileIndexViewModel
+            {
+                Users = ctx.Users.ToList()
+            };
+            return View(viewModel);
         }
+
+       
     }
 }
