@@ -189,7 +189,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AddImageViewModel.cs" />
     <Compile Include="Models\FriendRequest.cs" />
     <Compile Include="Models\Gr8DbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -264,14 +263,14 @@
     <Content Include="Views\Profile\AddUserInfoForm.cshtml" />
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\MyFriends.cshtml" />
-    <Content Include="Views\Profile\FirstTimeProfile.cshtml" />
     <Content Include="Views\Profile\AddUserImage.cshtml" />
+    <Content Include="Views\UserImages\Add.cshtml" />
+    <Content Include="Views\UserImages\Index.cshtml" />
+    <Content Include="Views\UserImages\LoadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
-    <Folder Include="UserImages\" />
-    <Folder Include="Views\UserImages\" />
+    <Folder Include="Images\UserImages\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

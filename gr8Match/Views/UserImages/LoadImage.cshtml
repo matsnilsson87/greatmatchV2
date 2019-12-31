@@ -1,0 +1,50 @@
+﻿@model gr8Match.Models.Image
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LoadImage</title>
+</head>
+<body>
+    <div>
+        <h4>Image</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ImgPath)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ImgPath)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>
+    
+            <dd>
+                <img src="@Url.Content(Model.ImgPath)" width="250" height="250" />
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

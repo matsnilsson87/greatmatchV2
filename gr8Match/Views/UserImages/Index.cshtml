@@ -1,0 +1,17 @@
+﻿@using gr8Match.Models
+@model Image
+@{
+    ViewBag.Title = "Välj Profilbild";
+}
+
+
+
+<h2>Profilbild</h2>
+<p>Vänligen ladda upp en profilbild</p>
+
+<hr />
+
+
+
+@Html.Partial("Add", new Image())
+

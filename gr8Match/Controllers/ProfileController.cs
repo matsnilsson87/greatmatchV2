@@ -22,10 +22,11 @@ namespace gr8Match.Controllers
             ctx.Users.Add(model);
             ctx.SaveChanges();
 
-            return RedirectToAction("FirstTimeProfile", "Profile");
+            return RedirectToAction("Index", "UserImages");
         }
 
-        
+     
+
 
         public ActionResult MyProfile()
         {
