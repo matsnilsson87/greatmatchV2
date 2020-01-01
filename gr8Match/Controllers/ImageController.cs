@@ -9,30 +9,55 @@ using Microsoft.AspNet.Identity;
 
 namespace gr8Match.Controllers
 {
-    public class UserImagesController : Controller
+    public class ImageController : Controller
     {
        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
+
+        public int ThisUser()
+        {
+
+            var Users = new List<User>();
+            var ctx = new Gr8DbContext();
+            Users = ctx.Users.ToList();
+
+            int thisUserId = 0;
+            foreach (var u in Users)
+            {
+                if (u.IdentityID == User.Identity.GetUserId())
+                {
+                    thisUserId = u.Id;
+                    Console.WriteLine(thisUserId);
+                    return thisUserId;
+                }
+            }
+            return 0;
+        }
+
+
         [HttpPost]
         public ActionResult Add(Image image)
 
-        {       
+        {
+            int thisId = ThisUser();
                 string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
                 string fileExt = Path.GetExtension(image.ImageFile.FileName);
-                fileName = fileName + DateTime.Now.ToString("yymmssfff") + fileExt;
-                image.ImgPath = "~/Images/UserImage/" + fileName;
-                fileName = Path.Combine(Server.MapPath("~/Images/UserImage/") + fileName);
+                fileName = fileName + DateTime.Now.ToString("yymmdd") + fileExt;
+                image.ImgPath = "~/Images/UserImages/" + fileName;
+                image.Title = fileName;
+                image.UserId = thisId;
+            fileName = Path.Combine(Server.MapPath("~/Images/UserImages/"), fileName);
 
                 image.ImageFile.SaveAs(fileName);
-                image.Title = fileName;
-                image.UserId = ThisUser();
+               
 
 
             var ctx = new Gr8DbContext();
                 ctx.Images.Add(image);
+          
                 ctx.SaveChanges();
                 
 
@@ -53,19 +78,7 @@ namespace gr8Match.Controllers
         }
 
         
-        public int ThisUser()
-        {
-            var Users = new List<User>();
-            int thisUserId = 0;
-            foreach (var u in Users)
-            {
-                if (u.IdentityID == User.Identity.GetUserId())
-                {
-                    thisUserId = u.Id;
-                }
-            }
-            return thisUserId;
-        }
+       
 
 
     }

@@ -23,7 +23,7 @@ namespace gr8Match.Models
         public int UserId { get; set; }
         public User User1 { get; set; }
 
-        [InverseProperty("Img")]
+        [InverseProperty("Image")]
         public ICollection<User> Users { get; set; }
     }
 }

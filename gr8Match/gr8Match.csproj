@@ -184,7 +184,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\UserImagesController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -266,9 +266,9 @@
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\MyFriends.cshtml" />
     <Content Include="Views\Profile\AddUserImage.cshtml" />
-    <Content Include="Views\UserImages\Add.cshtml" />
-    <Content Include="Views\UserImages\Index.cshtml" />
-    <Content Include="Views\UserImages\LoadImage.cshtml" />
+    <Content Include="Views\Image\Add.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Image\LoadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

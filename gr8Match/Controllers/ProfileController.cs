@@ -22,7 +22,7 @@ namespace gr8Match.Controllers
             ctx.Users.Add(model);
             ctx.SaveChanges();
 
-            return RedirectToAction("Index", "UserImages");
+            return Redirect(Url.Action("Index", "Image"));
         }
 
      
