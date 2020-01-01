@@ -1,4 +1,6 @@
-﻿using System;
+﻿using gr8Match.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +12,23 @@ namespace gr8Match.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var Users = new List<User>();
+            var ctx = new Gr8DbContext();
+            Users = ctx.Users.ToList();
+            var _user =  new User();
+
+            foreach (var u in Users)
+            {
+                if (u.IdentityID == User.Identity.GetUserId())
+                {
+                    _user = u;
+                }
+            }
+
+            var viewModel = new UserViewModel(_user);
+
+
+            return View(viewModel);
         }
 
         public ActionResult About()

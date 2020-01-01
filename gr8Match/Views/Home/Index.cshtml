@@ -2,6 +2,8 @@
     ViewBag.Title = "Startsida";
 }
 @using Microsoft.AspNet.Identity
+@using gr8Match.Models
+@model UserViewModel
 
 <div id="homepageJumbotron" class="jumbotron">
     <h1>Välkommen till Gr8 Match!</h1>
@@ -14,7 +16,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="catBox">
-                <h2>Välkommen @User.Identity.GetUserName()!</h2>
+                <h2>Välkommen @Model.user.FirstName !</h2>
                 <p class="btn btn-default"> @Html.ActionLink("Ändra uppgifter", "Index", "Profile", routeValues: null, htmlAttributes: new { title = "Manage" }) &raquo;</p>
             </div>
         </div>

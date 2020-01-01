@@ -199,6 +199,7 @@
     <Compile Include="Models\ProfileIndexViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserInterests.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\Visitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
