@@ -35,10 +35,19 @@ namespace gr8Match.Controllers
 
         public ActionResult MyFriends()
         {
+            var id = User.Identity.GetUserId();
             var ctx = new Gr8DbContext();
             var viewModel = new ProfileIndexViewModel
             {
-                Users = ctx.Database.SqlQuery<User>("Select * From Users Join FriendRequests on Users.Id = FriendRequests.ToUser Where FriendRequests.FromUser = 3").ToList()
+                Users = ctx.Database.SqlQuery<User>("Select * " +
+                                                    "From Users " +
+                                                    "Join FriendRequests " +
+                                                    "on Users.Id = FriendRequests.ToUser " +
+                                                    "Where FriendRequests.FromUser in " +
+                                                    "(Select Id " +
+                                                    "From Users " +
+                                                    "Where IdentityID = '" + id + "')")
+                                                    .ToList()
             };
             return View(viewModel);
         }
