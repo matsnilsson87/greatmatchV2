@@ -38,7 +38,7 @@ namespace gr8Match.Controllers
             var ctx = new Gr8DbContext();
             var viewModel = new ProfileIndexViewModel
             {
-                Users = ctx.Users.SqlQuery("Select * From Users").ToList<User>()
+                Users = ctx.Database.SqlQuery<User>("Select * From Users Join FriendRequests on Users.Id = FriendRequests.ToUser Where FriendRequests.FromUser = 3").ToList()
             };
             return View(viewModel);
         }
