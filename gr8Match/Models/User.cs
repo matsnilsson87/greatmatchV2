@@ -17,9 +17,9 @@ namespace gr8Match.Models
         [Column(TypeName = "datetime2")]
         public DateTime DateOfBirth { get; set; }
 
-        [ForeignKey("Img")]
+        [ForeignKey("Image")]
         public int? ProfileImage { get; set; }
-        public Image Img { get; set; }
+        public Image Image { get; set; }
 
         public bool Active { get; set; }
         public string IdentityID { get; set; }
