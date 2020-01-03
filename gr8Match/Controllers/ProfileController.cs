@@ -71,6 +71,8 @@ namespace gr8Match.Controllers
                                                     .ToList(),
                 FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False'))")
                                                     .ToList()
+
+                                                    // denna kommentar vill man ha
             };
             return View(viewModel);
         }
