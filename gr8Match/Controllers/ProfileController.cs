@@ -53,14 +53,31 @@ namespace gr8Match.Controllers
             var viewModel = new MyProfileViewModel
             {
                 MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
-                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id ).FirstOrDefault(),
-                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id ).FirstOrDefault(),
+                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
+                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
                 MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
                 MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
             };
             return View(viewModel);
         }
 
+        public ActionResult OtherProfile(int id) {
+
+            
+            var ctx = new Gr8DbContext();
+            var viewModel = new OtherProfileViewModel
+            {
+                MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
+                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
+                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
+                MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
+            };
+            return View(viewModel);
+
+
+
+        }
         public ActionResult MyFriends()
         {
             var id = User.Identity.GetUserId();
@@ -77,8 +94,28 @@ namespace gr8Match.Controllers
             return View(viewModel);
         }
 
- 
+
+        public  ActionResult SearchBar(string search)
+        {
+            var ctx = new Gr8DbContext();
+            var lista = new SeachBarViewModel
+            {
+                User = ctx.Users.Where(x => x.FirstName.Contains(search) || search == null ).ToList()
+            };
+
+            return View(lista);
+        }
+
+        //public ActionResult SearchBar(string search)
+        //{
+        //    var ctx = new Gr8DbContext();
+        //    {
+        //        return View(ctx.Users.Where(x => x.FirstName.Contains(search) || search == null).ToList());
+        //    }
+
+        //}
 
 
     }
 }
+
