@@ -7,11 +7,14 @@
 <h2>Här tänker jag att man ska se sina vänner men just nu visas bara alla users</h2>
 
 <table>
+    <h2>Här tänker jag att man ska se sina vänner men just nu visas bara alla users</h2>
     @foreach (var user in Model.Users)
     {
         <tr>
             <td>@user.FirstName</td>
             <td>@user.LastName</td>
+
+
         </tr>
     }
 </table>
