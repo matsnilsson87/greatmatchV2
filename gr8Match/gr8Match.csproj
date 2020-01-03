@@ -197,8 +197,10 @@
     <Compile Include="Models\Interests.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyProfileViewModel.cs" />
+    <Compile Include="Models\OtherProfileViewModel.cs" />
     <Compile Include="Models\Posts.cs" />
     <Compile Include="Models\ProfileIndexViewModel.cs" />
+    <Compile Include="Models\SeachBarViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserInterests.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -272,6 +274,8 @@
     <Content Include="Views\Image\LoadImage.cshtml" />
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\NewFriendRequests.cshtml" />
+    <Content Include="Views\Profile\SearchBar.cshtml" />
+    <Content Include="Views\Profile\OtherProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
