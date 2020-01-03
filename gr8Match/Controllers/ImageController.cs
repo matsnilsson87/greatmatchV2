@@ -77,7 +77,12 @@ namespace gr8Match.Controllers
             return View(image);
         }
 
-        
+        public ActionResult ViewFriendProfile() {
+
+
+
+            return View();
+        }
        
 
 

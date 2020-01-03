@@ -24,13 +24,41 @@ namespace gr8Match.Controllers
 
             return Redirect(Url.Action("Index", "Image"));
         }
+        public int ThisUser()
+        {
 
-     
+            var Users = new List<User>();
+            var ctx = new Gr8DbContext();
+            Users = ctx.Users.ToList();
+
+            int thisUserId = 0;
+            foreach (var u in Users)
+            {
+                if (u.IdentityID == User.Identity.GetUserId())
+                {
+                    thisUserId = u.Id;
+                    Console.WriteLine(thisUserId);
+                    return thisUserId;
+                }
+            }
+            return 0;
+        }
+
 
 
         public ActionResult MyProfile()
         {
-            return View();
+            int id = ThisUser();
+            var ctx = new Gr8DbContext();
+            var viewModel = new MyProfileViewModel
+            {
+                MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
+                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id ).FirstOrDefault(),
+                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id ).FirstOrDefault(),
+                MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
+            };
+            return View(viewModel);
         }
 
         public ActionResult MyFriends()
@@ -46,5 +74,7 @@ namespace gr8Match.Controllers
         }
 
        
+
+
     }
 }

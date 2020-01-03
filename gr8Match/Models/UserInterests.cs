@@ -14,7 +14,7 @@ namespace gr8Match.Models
         public int Id { get; set; }
 
         [ForeignKey("User1")]
-        public int User { get; set; }
+        public int UserId { get; set; }
         public User User1 { get; set; }
 
         [ForeignKey("Interests")]

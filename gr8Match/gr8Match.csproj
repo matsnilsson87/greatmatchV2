@@ -195,6 +195,7 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Interests.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MyProfileViewModel.cs" />
     <Compile Include="Models\Posts.cs" />
     <Compile Include="Models\ProfileIndexViewModel.cs" />
     <Compile Include="Models\User.cs" />
@@ -263,12 +264,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\AddUserInfoForm.cshtml" />
-    <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\MyFriends.cshtml" />
     <Content Include="Views\Profile\AddUserImage.cshtml" />
     <Content Include="Views\Image\Add.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Image\LoadImage.cshtml" />
+    <Content Include="Views\Profile\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
