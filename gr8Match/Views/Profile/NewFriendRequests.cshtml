@@ -1,20 +1,13 @@
 ﻿@using gr8Match.Models
 @model ProfileIndexViewModel
-@{
-    ViewBag.Title = "Mina Vänner";
-}
-
-@Html.Partial("NewFriendRequests")
 
 <table>
-    <h2>Här är dina vänner:</h2>
-    @foreach (var user in Model.Users)
+    <h2>Nya vänförfrågningar:</h2>
+    @foreach (var user in Model.FriendsRequests)
     {
         <tr>
             <td>@user.FirstName </td>
             <td>@user.LastName</td>
-
-
         </tr>
     }
 </table>
