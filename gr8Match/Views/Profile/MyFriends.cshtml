@@ -4,15 +4,27 @@
     ViewBag.Title = "Mina Vänner";
 }
 
-<h2>Här tänker jag att man ska se sina vänner men just nu visas bara alla users</h2>
+@Html.Partial("NewFriendRequests")
 
-<table>
-    @foreach (var user in Model.Users)
-    {
-        <tr>
-            <td>@user.FirstName</td>
-            <td>@user.LastName</td>
-        </tr>
-    }
-</table>
+    <table>
+        <h2>Här är dina vänner:</h2>
+        @if (Model.Users.Count == 0)
+        {
+            <tr>
+                <td>Du har ju inga vänner :'(</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.FirstName </td>
+                    <td>@user.LastName</td>
+               
+
+                </tr>
+            }
+        }
+    </table>
 <hr />
