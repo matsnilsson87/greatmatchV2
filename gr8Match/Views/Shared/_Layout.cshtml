@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using gr8Match.Controllers
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,10 +26,13 @@
 
                     @if (Request.IsAuthenticated)
                     {
+
+                        var count = HelpController.CountFriendRequests(User.Identity.GetUserId());
                         <li>@Html.ActionLink("Min Profil", "MyProfile", "Profile")</li>
-                        <li>@Html.ActionLink("Mina Vänner", "MyFriends", "Profile")</li>
+                        <li>@Html.ActionLink("Mina Vänner (" + count + ")", "MyFriends", "Profile")</li>
+
                     }
-           
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
