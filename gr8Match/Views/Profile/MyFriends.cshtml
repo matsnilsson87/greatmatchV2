@@ -6,16 +6,25 @@
 
 @Html.Partial("NewFriendRequests")
 
-<table>
-    <h2>Här är dina vänner:</h2>
-    @foreach (var user in Model.Users)
-    {
-        <tr>
-            <td>@user.FirstName </td>
-            <td>@user.LastName</td>
+    <table>
+        <h2>Här är dina vänner:</h2>
+        @if (Model.Users.Count == 0)
+        {
+            <tr>
+                <td>Du har ju inga vänner :'(</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.FirstName </td>
+                    <td>@user.LastName</td>
+               
 
-
-        </tr>
-    }
-</table>
+                </tr>
+            }
+        }
+    </table>
 <hr />

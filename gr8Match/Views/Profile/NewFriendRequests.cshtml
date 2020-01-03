@@ -1,14 +1,24 @@
 ﻿@using gr8Match.Models
 @model ProfileIndexViewModel
 
-<table>
-    <h2>Nya vänförfrågningar:</h2>
-    @foreach (var user in Model.FriendsRequests)
-    {
-        <tr>
-            <td>@user.FirstName </td>
-            <td>@user.LastName</td>
-        </tr>
-    }
-</table>
+    <table>
+        <h2>Nya vänförfrågningar:</h2>
+
+            @if (Model.FriendsRequests.Count == 0)
+            {
+                <tr>
+                    <td>Du är opopulär!</td>
+                </tr>
+            }
+            else
+            { 
+                foreach (var user in Model.FriendsRequests)
+                {
+                    <tr>
+                        <td>@user.FirstName </td>
+                        <td>@user.LastName</td>
+                    </tr>
+                }
+            }
+    </table>
 <hr />
