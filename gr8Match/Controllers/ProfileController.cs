@@ -93,6 +93,8 @@ namespace gr8Match.Controllers
                                                     "From Users " +
                                                     "Where IdentityID = '" + id + "')")
                                                     .ToList()
+
+                                                    // denna kommentar vill man ha
             };
             return View(viewModel);
         }
