@@ -71,6 +71,7 @@ namespace gr8Match.Controllers
             int id = ThisUser();
             var ctx = new Gr8DbContext();
             ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'False' Where Id =" + id);
+            ctx.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -79,6 +80,7 @@ namespace gr8Match.Controllers
             int id = ThisUser();
             var ctx = new Gr8DbContext();
             ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'True' Where Id =" + id);
+            ctx.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -89,7 +91,6 @@ namespace gr8Match.Controllers
             var viewModel = new OtherProfileViewModel
             {
                 OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-               
                 OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
                
             };
@@ -104,9 +105,9 @@ namespace gr8Match.Controllers
             var ctx = new Gr8DbContext();
             var viewModel = new ProfileIndexViewModel
             {
-                Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True'))")
+                Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) and Active = 'True'")
                                                     .ToList(),
-                FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False'))")
+                FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True'")
                                                     .ToList()
 
                                                     // denna kommentar vill man ha
@@ -120,7 +121,7 @@ namespace gr8Match.Controllers
             var ctx = new Gr8DbContext();
             var lista = new SeachBarViewModel
             {
-                User = ctx.Users.Where(x => x.FirstName.Contains(search) || search == null ).ToList()
+                User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active==true || search == null && x.Active == true).ToList()
             };
 
             return View(lista);
