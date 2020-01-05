@@ -1,34 +1,38 @@
 ﻿@model gr8Match.Models.SeachBarViewModel
 @{
-    ViewBag.Title = "Startsida";
+    ViewBag.Title = "Alla Användare";
 }
 
 @using (Html.BeginForm("SearchBar", "Profile", FormMethod.Get))
 {
-    @Html.TextBox("search")<input type="submit" value="Search" />
+    @Html.TextBox("search")
+    <input type="submit" value="Sök" />
 }
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Profile</th>
+            <th>Profil</th>
         </tr>
     </thead>
     <tbody>
-            
-            @foreach (var item in Model.User)
-                {
-                <tr>
-                    <td> @item.FirstName @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
-                    </td>
-                   </tr>
-            }
-            @if (Model.User.Count() == 0) { 
-            <tr>
-            <h5>Din Sökning gav inga träffar</h5>
-            </tr>
-                    }
 
+        @foreach (var item in Model.User)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
+                </td>
+            </tr>
+        }
+        @if (Model.User.Count() == 0)
+        {
+            <tr>
+                <td>
+                    <h6>Din sökning gav inga träffar</h6>
+                </td>
+            </tr>
+        }
 
     </tbody>
 </table>

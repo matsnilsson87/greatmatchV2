@@ -70,13 +70,13 @@ else
             <h3>Bild</h3>
             <br />
             <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
+            <h4>Namn: @Model.user.FirstName</h4>
+            <p>Födelsedatum: @Model.user.DateOfBirth</p>
 
             @if (Request.IsAuthenticated)
             {
                 <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
+                    @Html.ActionLink("Kontakta", "MyProfile", "Profile") &raquo;
                 </p>
             }
             else

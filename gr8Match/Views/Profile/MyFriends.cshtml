@@ -16,12 +16,12 @@
         }
         else
         {
-            foreach (var user in Model.Users)
+            foreach (var friend in Model.Users)
             {
                 <tr>
-                    <td>@user.FirstName </td>
-                    <td>@user.LastName</td>
-               
+                    <td>@friend.FirstName </td>
+                    <td> @friend.LastName</td>
+                    <td> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
 
                 </tr>
             }
