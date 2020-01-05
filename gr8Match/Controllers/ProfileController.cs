@@ -55,6 +55,7 @@ namespace gr8Match.Controllers
                 MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
                 FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
                 LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
+                Age = ctx.Database.SqlQuery<DateTime>("Select DateofBirth from Users where Id =" + id).FirstOrDefault(),
                 MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
                 MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
             };
@@ -70,6 +71,7 @@ namespace gr8Match.Controllers
                 MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
                 FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
                 LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
+                Age = ctx.Database.SqlQuery<DateTime>("Select DateofBirth from Users where Id =" + id).FirstOrDefault(),
                 MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
                 MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
             };
@@ -106,14 +108,34 @@ namespace gr8Match.Controllers
             return View(lista);
         }
 
-        //public ActionResult SearchBar(string search)
-        //{
-        //    var ctx = new Gr8DbContext();
-        //    {
-        //        return View(ctx.Users.Where(x => x.FirstName.Contains(search) || search == null).ToList());
-        //    }
+      
+        public ActionResult ConfirmFrinedRequest(int? id)
+        {
 
-        //}
+            var MyId = ThisUser();
+            
+            var ctx = new Gr8DbContext();
+
+           ctx.Database.ExecuteSqlCommand("Update FriendRequests Set Accepted = 'True' Where FromUser = '"+ id.ToString() + "' and ToUser = '" + MyId.ToString()+"'" );
+                ctx.SaveChanges();
+            
+            return RedirectToAction("MyFriends", "Profile");
+        }
+
+        public ActionResult DenyFrinedRequest(int? id)
+        {
+
+            var MyId = ThisUser();
+
+            var ctx = new Gr8DbContext();
+
+            ctx.Database.ExecuteSqlCommand("delete from FriendRequests Where FromUser = '" + id.ToString() + "' and ToUser = '" + MyId.ToString() + "'");
+            ctx.SaveChanges();
+
+            return RedirectToAction("MyFriends", "Profile");
+        }
+
+       
 
 
     }

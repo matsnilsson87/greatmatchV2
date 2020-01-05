@@ -22,7 +22,8 @@
                 @Model.LastName
             </td>
             <td>
-                @Model.Age
+                @{int age = new DateTime(DateTime.Now.Subtract(Model.Age).Ticks).Year - 1;}
+                @age år
             </td>
 
         </tr>

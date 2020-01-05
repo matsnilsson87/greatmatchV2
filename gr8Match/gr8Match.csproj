@@ -274,7 +274,6 @@
     <Content Include="Views\Image\LoadImage.cshtml" />
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\NewFriendRequests.cshtml" />
-    <Content Include="Views\Profile\NewFriendRequests.cshtml" />
     <Content Include="Views\Profile\SearchBar.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
   </ItemGroup>

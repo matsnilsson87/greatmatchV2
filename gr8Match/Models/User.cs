@@ -14,12 +14,11 @@ namespace gr8Match.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [Column(TypeName = "datetime2")]
+        [Column(TypeName = "date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateOfBirth { get; set; }
 
-        [ForeignKey("Image")]
-        public int? ProfileImage { get; set; }
-        public Image Image { get; set; }
+        public string ProfileImage { get; set; }
 
         public bool Active { get; set; }
         public string IdentityID { get; set; }

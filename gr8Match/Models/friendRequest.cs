@@ -14,11 +14,11 @@ namespace gr8Match.Models
         public int Id { get; set; }
 
         [ForeignKey("User1")]
-        public int FromUser { get; set; }
+        public int? FromUser { get; set; }
         public User User1 { get; set; }
         
         [ForeignKey("User2")]
-        public int ToUser { get; set; }
+        public int? ToUser { get; set; }
         public User User2 { get; set; }
 
         public bool Accepted   { get; set; }

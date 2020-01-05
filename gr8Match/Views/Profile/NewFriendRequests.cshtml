@@ -1,7 +1,7 @@
 ﻿@using gr8Match.Models
 @model ProfileIndexViewModel
 
-    <table>
+    <table class="table">
         <h2>Nya vänförfrågningar:</h2>
 
             @if (Model.FriendsRequests.Count == 0)
@@ -12,12 +12,19 @@
             }
             else
             { 
-                foreach (var user in Model.FriendsRequests)
+                foreach (var friend in Model.FriendsRequests)
                 {
-                    <tr>
-                        <td>@user.FirstName </td>
-                        <td>@user.LastName</td>
-                    </tr>
+    <tr>
+        <td>@friend.FirstName</td>
+       
+        <td>@friend.LastName</td>
+        
+        <td>@Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
+        
+        <td>@Html.ActionLink("Acepter förfrågan", "ConfirmFrinedRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
+       
+        <td>@Html.ActionLink("Avböj förfrågan", "DenyFrinedRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
+    </tr>
                 }
             }
     </table>
