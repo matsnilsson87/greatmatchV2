@@ -132,7 +132,34 @@ namespace gr8Match.Controllers
             return RedirectToAction("MyFriends", "Profile");
         }
 
-       
+        public ActionResult FriendRequest(int Id)
+        {
+            int myId = ThisUser();
+            int friendId = Id;
+            var ctx = new Gr8DbContext();
+            int friends = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'True'").Sum();
+            int friendRequest = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'False'").Sum();
+
+            if (friends > 0)
+            {
+                //meddela att ni redan är vänner
+                return RedirectToAction("MyFriends", "Profile");
+            }
+
+            else if (friendRequest > 0)
+            {
+                //meddela att det finns en vännförfrågan som inte är godkänd
+                return RedirectToAction("MyFriends", "Profile");
+            }
+
+            else 
+            {
+                ctx.Database.ExecuteSqlCommand("Insert into FriendRequests values(" + myId + ", " + friendId + ", 'False') ");
+                ctx.SaveChanges();
+                return RedirectToAction("MyFriends", "Profile");
+            }
+         
+        }
 
 
     }
