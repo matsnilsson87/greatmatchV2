@@ -8,19 +8,16 @@ namespace gr8Match.Models
 {
     public class MyProfileViewModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime Age { get; set; }
+        public User MyUser { get; set; }
+       
         public List<string> MyInterests { get; set; }
-        public Image MyImage { get; set; }
+        
         public List<Posts> MyPosts { get; set; }
 
         public MyProfileViewModel()
         {
-            FirstName = "";
-            LastName = "";
+            MyUser = new User();
             MyInterests = new List<string>();
-            MyImage = new Image();
             MyPosts = new List<Posts>();
         }
     }

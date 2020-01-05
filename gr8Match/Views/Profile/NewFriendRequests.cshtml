@@ -15,6 +15,12 @@
                 foreach (var friend in Model.FriendsRequests)
                 {
     <tr>
+        <td>
+            @if (friend.ProfileImage == null)
+            {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+            else
+            {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
+        </td>
         <td>@friend.FirstName</td>
        
         <td>@friend.LastName</td>

@@ -66,9 +66,10 @@ else
     <div class="col-md-2">
         <div class="catBox">
             <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
+            @if (Model.user.ProfileImage == null)
+            {<img src="~/Images/defaultImg.jpg" width="75" height="75" />}
+            else
+            {<img src="@Url.Content(Model.user.ProfileImage)" width="75" height="75" />}
             <br />
             <h4>Namn: @Model.user.FirstName</h4>
             <p>Födelsedatum: @Model.user.DateOfBirth</p>

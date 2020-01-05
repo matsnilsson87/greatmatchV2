@@ -2,27 +2,32 @@
 
 
 @{
-    ViewBag.Title = Model.FirstName + " Profil";
+    ViewBag.Title = Model.OtherUser.FirstName + " Profil";
 }
 
 
-<div>
-    <img src="@Url.Content(Model.MyImage.ImgPath)" width="250" height="250" />
-</div>
+    <div>
+        @if (Model.OtherUser.ProfileImage == null)
+        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+
+        else
+        {<img src="@Url.Content(Model.OtherUser.ProfileImage)" width="150" height="150" />}
+       
+    </div>
 
 <div>
     <table class="table">
 
         <tr>
             <td>
-                @Model.FirstName
+                @Model.OtherUser.FirstName
 
             </td>
             <td>
-                @Model.LastName
+                @Model.OtherUser.FirstName
             </td>
             <td>
-                @{int age = new DateTime(DateTime.Now.Subtract(Model.Age).Ticks).Year - 1;}
+                @{int age = new DateTime(DateTime.Now.Subtract(Model.OtherUser.DateOfBirth).Ticks).Year - 1;}
                 @age år
             </td>
 
@@ -37,7 +42,7 @@
 
     <table class="table">
 
-        @foreach (var i in Model.MyInterests)
+        @foreach (var i in Model.OtherUserInterests)
         {
             <tr>
                 <td>
@@ -49,22 +54,5 @@
 </div>
 
 <div>
-    Mina Meddelande
-
-    <table class="table">
-
-        @foreach (var p in Model.MyPosts)
-        {
-            <tr>
-                <td>
-                    @p.Text
-                </td>
-                <td>
-                    @p.WrittenBy
-                </td>
-            </tr>
-
-        }
-    </table>
-
+     @*Här tar vi en partialview med meddelande genom webapi*@
 </div>

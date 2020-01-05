@@ -19,10 +19,11 @@ namespace gr8Match.Controllers
         public ActionResult AddUser(User model)
         {
             var ctx = new Gr8DbContext();
+            model.Active = true;
             ctx.Users.Add(model);
             ctx.SaveChanges();
 
-            return Redirect(Url.Action("Index", "Image"));
+            return Redirect(Url.Action("MyProfile", "Profile"));
         }
         public int ThisUser()
         {
@@ -52,10 +53,8 @@ namespace gr8Match.Controllers
             var ctx = new Gr8DbContext();
             var viewModel = new MyProfileViewModel
             {
-                MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
-                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
-                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
-                Age = ctx.Database.SqlQuery<DateTime>("Select DateofBirth from Users where Id =" + id).FirstOrDefault(),
+                MyUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
+           
                 MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
                 MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
             };
@@ -68,12 +67,10 @@ namespace gr8Match.Controllers
             var ctx = new Gr8DbContext();
             var viewModel = new OtherProfileViewModel
             {
-                MyImage = ctx.Images.Where(i => i.UserId == id).FirstOrDefault(),
-                FirstName = ctx.Database.SqlQuery<string>("Select FirstName from Users where Id =" + id).FirstOrDefault(),
-                LastName = ctx.Database.SqlQuery<string>("Select LastName from Users where Id =" + id).FirstOrDefault(),
-                Age = ctx.Database.SqlQuery<DateTime>("Select DateofBirth from Users where Id =" + id).FirstOrDefault(),
-                MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
-                MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
+                OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
+               
+                OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
+               
             };
             return View(viewModel);
 

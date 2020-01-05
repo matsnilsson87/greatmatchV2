@@ -42,22 +42,23 @@ namespace gr8Match.Controllers
         public ActionResult Add(Image image)
 
         {
-            int thisId = ThisUser();
+                int thisId = ThisUser();
                 string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
                 string fileExt = Path.GetExtension(image.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmdd") + fileExt;
                 image.ImgPath = "~/Images/UserImages/" + fileName;
                 image.Title = fileName;
                 image.UserId = thisId;
-            fileName = Path.Combine(Server.MapPath("~/Images/UserImages/"), fileName);
-
+                fileName = Path.Combine(Server.MapPath("~/Images/UserImages/"), fileName);
+                
                 image.ImageFile.SaveAs(fileName);
                
 
 
-            var ctx = new Gr8DbContext();
+                var ctx = new Gr8DbContext();
                 ctx.Images.Add(image);
-          
+                ctx.Database.ExecuteSqlCommand("Update Users Set ProfileImage = '"+image.ImgPath+"' where Id = '" + thisId.ToString() + "'");
+
                 ctx.SaveChanges();
                 
 
@@ -65,24 +66,8 @@ namespace gr8Match.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult LoadImage(int id) 
-        {
-            id = ThisUser();
-            Image image = new Image();
-            using (Gr8DbContext db = new Gr8DbContext())
-            {
-                image = db.Images.Where(i => i.Id == id).FirstOrDefault();
-            }
-            return View(image);
-        }
+     
 
-        public ActionResult ViewFriendProfile() {
-
-
-
-            return View();
-        }
        
 
 

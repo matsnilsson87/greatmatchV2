@@ -217,6 +217,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\defaultImg.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Models\FriendsViewModel.cshtml" />
@@ -268,10 +269,8 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\AddUserInfoForm.cshtml" />
     <Content Include="Views\Profile\MyFriends.cshtml" />
-    <Content Include="Views\Profile\AddUserImage.cshtml" />
     <Content Include="Views\Image\Add.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
-    <Content Include="Views\Image\LoadImage.cshtml" />
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\NewFriendRequests.cshtml" />
     <Content Include="Views\Profile\SearchBar.cshtml" />

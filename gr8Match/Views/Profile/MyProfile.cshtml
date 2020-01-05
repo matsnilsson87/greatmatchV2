@@ -7,22 +7,28 @@
 
 
     <div>
-        <img src="@Url.Content(Model.MyImage.ImgPath)" width="250" height="250" />
-    </div>
+        @if (Model.MyUser.ProfileImage == null)
+        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
+        else
+        {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
+
+        @Html.ActionLink("Byt profilbil", "Index", "Image")
+    </div>
+    
 <div>
     <table class="table">
 
         <tr>
             <td>
-                @Model.FirstName
+                @Model.MyUser.FirstName
 
             </td>
             <td>
-                @Model.LastName
+                @Model.MyUser.LastName
             </td>
             <td>
-                @{int age = new DateTime(DateTime.Now.Subtract(Model.Age).Ticks).Year - 1;}
+                @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
                 @age år
             </td>
 
