@@ -275,6 +275,7 @@
     <Content Include="Views\Profile\NewFriendRequests.cshtml" />
     <Content Include="Views\Profile\SearchBar.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
+    <Content Include="Views\Profile\InactivateAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

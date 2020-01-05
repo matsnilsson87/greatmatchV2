@@ -21,13 +21,25 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="catBox">
+            
+                @if (Model.user.Active == true)
+                {<div class="catBox">
                 <h2>Vill du avregistrera dig?</h2>
-                <p>Ja du kan ju försöka med knappen här under....</p>
-                <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
-            </div>
+    <p>Ja du kan ju försöka med knappen här under....</p>
+    <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "InactivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+</div>
+            }
+    else
+    {<div class="catBox">
+    <h2>Meh Hallå!?!?!?</h2>
+    <p>Ditt konto är ju avaktiverat, klicka här under för att aktivera det igen</p>
+    <p class="btn btn-default">@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+</div>
+            }
+</div>
         </div>
-    </div>
+   
+    
 }
 else
 {

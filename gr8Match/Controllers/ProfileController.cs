@@ -61,6 +61,27 @@ namespace gr8Match.Controllers
             return View(viewModel);
         }
 
+        public ActionResult InactivateAccount()
+        {
+            return View();
+        }
+
+        public ActionResult Deactivate()
+        {
+            int id = ThisUser();
+            var ctx = new Gr8DbContext();
+            ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'False' Where Id =" + id);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ActivateAccount()
+        {
+            int id = ThisUser();
+            var ctx = new Gr8DbContext();
+            ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'True' Where Id =" + id);
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult OtherProfile(int id) {
 
             
