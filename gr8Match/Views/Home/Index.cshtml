@@ -21,25 +21,25 @@
             </div>
         </div>
         <div class="col-md-4">
-            
-                @if (Model.user.Active == true)
-                {<div class="catBox">
-                <h2>Vill du avregistrera dig?</h2>
-    <p>Ja du kan ju försöka med knappen här under....</p>
-    <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "InactivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
-</div>
+
+            @if (Model.user.Active == true)
+            {<div class="catBox">
+                    <h2>Vill du avregistrera dig?</h2>
+                    <p>Ja du kan ju försöka med knappen här under....</p>
+                    <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "InactivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+                </div>
             }
-    else
-    {<div class="catBox">
-    <h2>Meh Hallå!?!?!?</h2>
-    <p>Ditt konto är ju avaktiverat, klicka här under för att aktivera det igen</p>
-    <p class="btn btn-default">@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
-</div>
+            else
+            {<div class="catBox">
+                    <h2>Meh Hallå!?!?!?</h2>
+                    <p>Ditt konto är ju avaktiverat, klicka här under för att aktivera det igen</p>
+                    <p class="btn btn-default">@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+                </div>
             }
-</div>
         </div>
-   
-    
+    </div>
+
+
 }
 else
 {
@@ -72,24 +72,36 @@ else
 <br />
 <br />
 
-<h1>Några av våra användare:</h1>
+<h1 align="center">Några av våra användare:</h1>
 
-<div class="row">
-    <div class="col-md-2">
+
+<div class="outer">
+
+    @foreach (var item in Model.Profiles)
+    {
         <div class="catBox">
+
             <br />
-            @if (Model.user.ProfileImage == null)
-            {<img src="~/Images/defaultImg.jpg" width="75" height="75" />}
-            else
-            {<img src="@Url.Content(Model.user.ProfileImage)" width="75" height="75" />}
             <br />
-            <h4>Namn: @Model.user.FirstName</h4>
-            <p>Födelsedatum: @Model.user.DateOfBirth</p>
+            <h3>
+                @if (item.ProfileImage == null)
+                {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+
+                else
+                {<img src="@Url.Content(item.ProfileImage)" width="150" height="150" />}
+            </h3>
+            <br />
+            <br />
+            <h4>@item.FirstName @item.LastName</h4>
+            <p>
+                Ålder: @{int age = new DateTime(DateTime.Now.Subtract(item.DateOfBirth).Ticks).Year - 1;}
+                @age
+            </p>
 
             @if (Request.IsAuthenticated)
             {
                 <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "MyProfile", "Profile") &raquo;
+                    @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
                 </p>
             }
             else
@@ -98,126 +110,7 @@ else
                     @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
                 </p>
             }
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="catBox">
-            <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
-            <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
 
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
         </div>
-    </div>
-    <div class="col-md-2">
-        <div class="catBox">
-            <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
-            <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
-
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="catBox">
-            <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
-            <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
-
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="catBox">
-            <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
-            <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
-
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="catBox">
-            <br />
-            <br />
-            <h3>Bild</h3>
-            <br />
-            <br />
-            <h4>Namn</h4>
-            <p>Ålder</p>
-
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "UserPage", "Home") &raquo;
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
-        </div>
-    </div>
+    }
 </div>
