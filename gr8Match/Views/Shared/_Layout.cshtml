@@ -1,5 +1,9 @@
 ﻿@using gr8Match.Controllers
 @using Microsoft.AspNet.Identity
+@{
+    ViewBag.MyId = HelpController.ThisUser(User.Identity.GetUserId());
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +30,6 @@
 
                     @if (Request.IsAuthenticated)
                     {
-
                         var count = HelpController.CountFriendRequests(User.Identity.GetUserId());
                         <li>@Html.ActionLink("Min Profil", "MyProfile", "Profile")</li>
                         <li>@Html.ActionLink("Mina Vänner (" + count + ")", "MyFriends", "Profile")</li>
@@ -49,6 +52,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/posts")
     @RenderSection("scripts", required: false)
 </body>
 </html>

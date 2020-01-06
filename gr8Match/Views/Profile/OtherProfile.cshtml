@@ -3,6 +3,8 @@
 
 @{
     ViewBag.Title = Model.OtherUser.FirstName + " Profil";
+    ViewBag.Id = Model.OtherUser.Id;
+
 }
 
 
@@ -56,5 +58,6 @@
 </div>
 
 <div>
-     @*Här tar vi en partialview med meddelande genom webapi*@
+    
+    @Html.Partial("Posts")
 </div>

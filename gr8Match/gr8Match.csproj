@@ -199,6 +199,7 @@
     <Compile Include="Models\MyProfileViewModel.cs" />
     <Compile Include="Models\OtherProfileViewModel.cs" />
     <Compile Include="Models\Posts.cs" />
+    <Compile Include="Models\PostsViewModel.cs" />
     <Compile Include="Models\ProfileIndexViewModel.cs" />
     <Compile Include="Models\SeachBarViewModel.cs" />
     <Compile Include="Models\User.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\Visitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebApi\PostsApiController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -232,6 +234,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\posts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -276,6 +279,7 @@
     <Content Include="Views\Profile\SearchBar.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
     <Content Include="Views\Profile\InactivateAccount.cshtml" />
+    <Content Include="Views\Profile\Posts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
