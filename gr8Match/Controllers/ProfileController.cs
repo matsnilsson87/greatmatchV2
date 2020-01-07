@@ -129,7 +129,8 @@ namespace gr8Match.Controllers
 
         public ActionResult OtherProfile(int id) {
 
-            
+            var myId = ThisUser();
+            var time = DateTime.Now;
             var ctx = new Gr8DbContext();
             var viewModel = new OtherProfileViewModel
             {
@@ -137,10 +138,9 @@ namespace gr8Match.Controllers
                 OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
                
             };
+            ctx.Database.ExecuteSqlCommand("Insert into Visitors Values ("+ myId +", "+ id +", '"+ time +"')");
+            ctx.SaveChanges();
             return View(viewModel);
-
-
-
         }
         public ActionResult MyFriends()
         {
