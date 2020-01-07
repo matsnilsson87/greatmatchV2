@@ -276,6 +276,7 @@
     <Content Include="Views\Profile\SearchBar.cshtml" />
     <Content Include="Views\Profile\OtherProfile.cshtml" />
     <Content Include="Views\Profile\InactivateAccount.cshtml" />
+    <Content Include="Views\Profile\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
