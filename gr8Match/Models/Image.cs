@@ -11,6 +11,8 @@ namespace gr8Match.Models
     public class Image
     {   [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Titel")]
         public string Title { get; set; }
 
         [DisplayName("Ladda upp profilbild")]
