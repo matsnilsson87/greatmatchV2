@@ -12,6 +12,8 @@ namespace gr8Match.Models
        
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Meddelande")]
         public string Text { get; set; }
         public DateTime Datum { get; set; }
        

@@ -75,42 +75,46 @@ else
 <h1 align="center">Några av våra användare:</h1>
 
 
-<div class="outer">
+<div class="row">
 
     @foreach (var item in Model.Profiles)
     {
-        <div class="catBox">
+        <div class="col-md-2">
+            <div class="catBox">
 
-            <br />
-            <br />
-            <h3>
-                @if (item.ProfileImage == null)
-                {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+                <br />
+                <br />
+                <h3>
+                    @if (item.ProfileImage == null)
+                    {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
+                    else
+                    {<img src="@Url.Content(item.ProfileImage)" width="150" height="150" />}
+                </h3>
+                <br />
+                <br />
+                <h4>@item.FirstName @item.LastName</h4>
+                <p>
+                    Ålder: @{int age = new DateTime(DateTime.Now.Subtract(item.DateOfBirth).Ticks).Year - 1;}
+                    @age
+                </p>
+
+                @if (Request.IsAuthenticated)
+                {
+                    <p class="btn btn-default">
+                        @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
+                    </p>
+                }
                 else
-                {<img src="@Url.Content(item.ProfileImage)" width="150" height="150" />}
-            </h3>
-            <br />
-            <br />
-            <h4>@item.FirstName @item.LastName</h4>
-            <p>
-                Ålder: @{int age = new DateTime(DateTime.Now.Subtract(item.DateOfBirth).Ticks).Year - 1;}
-                @age
-            </p>
+                {
+                    <p class="btn btn-default">
+                        @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
+                    </p>
+                }
 
-            @if (Request.IsAuthenticated)
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
-                </p>
-            }
-            else
-            {
-                <p class="btn btn-default">
-                    @Html.ActionLink("Kontakta", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })&raquo;
-                </p>
-            }
-
+            </div>
         </div>
+
     }
 </div>
+

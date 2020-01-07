@@ -1,8 +1,5 @@
 ﻿@using gr8Match.Controllers
 @using Microsoft.AspNet.Identity
-@{
-    ViewBag.MyId = HelpController.ThisUser(User.Identity.GetUserId());
-}
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +49,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/posts")
+  
     @RenderSection("scripts", required: false)
 </body>
 </html>

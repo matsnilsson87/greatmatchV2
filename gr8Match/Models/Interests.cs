@@ -10,6 +10,8 @@ namespace gr8Match.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Intressen")]
         public string Name { get; set; }
 
     }
