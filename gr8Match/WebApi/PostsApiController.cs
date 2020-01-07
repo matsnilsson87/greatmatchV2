@@ -9,28 +9,31 @@ using gr8Match.Models;
 
 namespace gr8Match.WebApi
 {
-    public class PostsApiController : ApiController
+    public class PostsController : ApiController
     {
         private readonly Gr8DbContext ctx;
 
-        public PostsApiController()
+        public PostsController()
         {
             ctx = new Gr8DbContext();
         }
-        // /api/postsapi/getpostslist
+        // /api/posts/getpostslist
         [HttpGet]
-        public PostsViewModel GetPostsList(int id) {
+        public IEnumerable<Posts> GetPostsList(int id) {
 
-
-            var view = new PostsViewModel
-            {
-                PostsList = ctx.Posts.Where(i => i.WrittenTo == id).OrderBy(d => d.Id).ToList()
-            };
             
+                
+            var view = new List<Posts>();
+            view = ctx.Posts.Where(i => i.WrittenTo == id).OrderBy(d => d.Datum).ToList();
+                 
             return view;
-
         }
-
+        // /api/posts/writtenbyname
+        [HttpGet]
+        public string WrittenByName(int id) {
+            string name = ctx.Users.SqlQuery("select FirstName + ' ' + LastName from Users where Id = " + id).ToString();
+            return name;
+        }
 
         // /api/postsapi/send
         [HttpPost]

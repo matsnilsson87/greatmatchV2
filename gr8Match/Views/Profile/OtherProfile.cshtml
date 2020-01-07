@@ -1,9 +1,11 @@
 ﻿@model gr8Match.Models.OtherProfileViewModel
-
+@using gr8Match.Controllers
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = Model.OtherUser.FirstName + " Profil";
     ViewBag.Id = Model.OtherUser.Id;
+    ViewBag.MyId = HelpController.ThisUser(User.Identity.GetUserId()); 
 
 }
 
@@ -58,6 +60,5 @@
 </div>
 
 <div>
-    
     @Html.Partial("Posts")
 </div>

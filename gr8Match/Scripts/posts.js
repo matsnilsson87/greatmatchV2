@@ -1,8 +1,23 @@
-﻿function updateMessageList() {
-    // Hämta användarid från den dolda input-taggen:
-    const userId = $('#user-id').val();
+﻿
 
-    $.get('/api/chatmessageapi/list', userId)
+
+function getName() {
+    const id = $('#user-id').val();
+    var userId = parseInt(id, 10)
+
+    var namn = $.get('/api/posts/writtenbyname/' + userId).responseText();
+    return namn;
+    
+}
+
+
+function updateMessageList() {
+    // Hämta användarid från den dolda input-taggen:
+    const id = $('#user-id').val();
+    var userId = parseInt(id, 10)
+    var name = "Mats";
+    
+    $.get('/api/posts/getpostslist/' + userId)
         .then((resp) => {
             if (resp && Array.isArray(resp)) {
                 $('#message-list').html('');
@@ -12,8 +27,7 @@
                         .append(
                             `<article class="message">
                                     <header class="header">
-                                        
-                                        <h2>${post.WrittenBy}</h2>
+                                        <h6>${name}</h6>
                                     </header>
                                     <main class="body">${post.Text}</main>
                                 </article>`
