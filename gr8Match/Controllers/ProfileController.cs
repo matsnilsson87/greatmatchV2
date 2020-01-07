@@ -161,10 +161,11 @@ namespace gr8Match.Controllers
 
         public  ActionResult SearchBar(string search)
         {
+            var MyId = ThisUser();
             var ctx = new Gr8DbContext();
             var lista = new SeachBarViewModel
             {
-                User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active==true || search == null && x.Active == true).ToList()
+                User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active==true && x.Id != MyId  || search == null && x.Active == true && x.Id != MyId).ToList()
             };
 
             return View(lista);
