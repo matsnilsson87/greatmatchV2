@@ -25,7 +25,11 @@ namespace gr8Match.Controllers
                 }
             }
 
-            var viewModel = new UserViewModel(_user);
+            var viewModel = new UserViewModel(_user)
+            {
+                Profiles = ctx.Database.SqlQuery<User>("select top 5 * from Users order by newid()").ToList()
+
+            };
 
 
             return View(viewModel);
