@@ -280,6 +280,9 @@
     <Content Include="Views\Profile\OtherProfile.cshtml" />
     <Content Include="Views\Profile\InactivateAccount.cshtml" />
     <Content Include="Views\Profile\Posts.cshtml" />
+    <Content Include="Views\Profile\EditProfile.cshtml" />
+    <Content Include="Views\Profile\AddInterests.cshtml" />
+    <Content Include="Views\Profile\DeleteInterest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
