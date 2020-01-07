@@ -52,16 +52,17 @@
 
 <div>
 
-    Mina Intressen
+    Mina Intressen  @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
 
     <table class="table">
-       
+
         @foreach (var i in Model.MyInterests)
         {
             <tr>
                 <td>
                     @i
                 </td>
+
             </tr>
         }
     </table>

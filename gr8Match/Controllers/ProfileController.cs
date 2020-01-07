@@ -66,7 +66,7 @@ namespace gr8Match.Controllers
         {
             using(Gr8DbContext gr8Db = new Gr8DbContext())
             {
-
+                
                 return View(gr8Db.Users.FirstOrDefault(o => o.Id == id));
                     
             }
@@ -82,6 +82,10 @@ namespace gr8Match.Controllers
                     var result = gr8Db.Users.SingleOrDefault(o => o.Id == id);
                     result.FirstName = Request["FirstName"];
                     result.LastName = Request["LastName"];
+                    
+                    string dateInput = Request["DateOfBirth"];
+                    DateTime parsedDate = DateTime.Parse(dateInput);
+                    result.DateOfBirth = parsedDate;
 
                     var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
                     var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
@@ -103,6 +107,79 @@ namespace gr8Match.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult AddInterests()
+        {
+            using (Gr8DbContext gr8Db = new Gr8DbContext())
+            {
+                
+                return View();
+
+            }
+        }
+        
+        [HttpPost]
+        public ActionResult AddInterests(FormCollection profil)
+        {
+
+            var MyId = ThisUser();
+            var ctx = new Gr8DbContext();
+            string intresse = Request["Name"];
+            var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
+            bool boolean = true;
+            foreach(var namn in lista1)
+            {
+                if (intresse.Equals(namn))
+                {
+                    boolean = false;
+                   
+                }
+                                  
+            }
+
+            if(boolean)
+            {
+                ctx.Database.ExecuteSqlCommand("Insert into Interests Values('" + intresse + "')");
+                ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+            }
+
+            else
+            {
+                ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+            }
+
+            ctx.SaveChanges();
+
+            return RedirectToAction("MyProfile", "Profile");
+        }
+
+        [HttpGet]
+        public ActionResult DeleteInterest()
+        {
+            using (Gr8DbContext gr8Db = new Gr8DbContext())
+            {
+
+                return View();
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteInterest(FormCollection profil)
+        {
+
+            var MyId = ThisUser();
+
+            var ctx = new Gr8DbContext();
+            string intresse = Request["Name"];
+
+            ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=(Select Id From Interests where Name='" + intresse + "')");
+            ctx.SaveChanges();
+
+            return RedirectToAction("MyProfile", "Profile");
+        }
+
 
         public ActionResult InactivateAccount()
         {
