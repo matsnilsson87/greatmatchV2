@@ -6,12 +6,13 @@
 @model UserViewModel
 
 <div id="homepageJumbotron" class="jumbotron">
-    <h1>Välkommen till Gr8 Match!</h1>
-    <p class="lead">Dejtingsidan som garanterar en Great Match för din katt! </p>
+    <h1>Välkommen @if (Request.IsAuthenticated) {@Model.user.FirstName} till Gr8 Match!</h1>
+
+<p class="lead">Dejtingsidan som garanterar en Great Match för din katt! </p>
 
 </div>
 
-@if (Request.IsAuthenticated)
+@*@if (Request.IsAuthenticated)
 {
     <div class="row">
         <div class="col-md-8">
@@ -70,7 +71,7 @@ else
 <br />
 <br />
 <br />
-<br />
+<br />*@
 
 <h1 align="center">Några av våra användare:</h1>
 
@@ -93,7 +94,7 @@ else
                 </h3>
                 <br />
                 <br />
-                <h4>@item.FirstName @item.LastName</h4>
+                <h5>@item.FirstName @item.LastName</h5>
                 <p>
                     Ålder: @{int age = new DateTime(DateTime.Now.Subtract(item.DateOfBirth).Ticks).Year - 1;}
                     @age

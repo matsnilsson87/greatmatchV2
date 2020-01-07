@@ -27,7 +27,7 @@ namespace gr8Match.Controllers
 
             var viewModel = new UserViewModel(_user)
             {
-                Profiles = ctx.Database.SqlQuery<User>("select top 6 * from Users order by newid()").ToList()
+                Profiles = ctx.Database.SqlQuery<User>("select top 6 * from Users where Active = 'True' and IdentityID != '"+ User.Identity.GetUserId() +"' order by newid()").ToList()
 
             };
 
