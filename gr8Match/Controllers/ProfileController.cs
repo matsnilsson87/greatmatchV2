@@ -60,6 +60,49 @@ namespace gr8Match.Controllers
             };
             return View(viewModel);
         }
+        
+        [HttpGet]
+        public ActionResult EditProfile(int id)
+        {
+            using(Gr8DbContext gr8Db = new Gr8DbContext())
+            {
+
+                return View(gr8Db.Users.FirstOrDefault(o => o.Id == id));
+                    
+            }
+        }
+        
+        [HttpPost]
+        public ActionResult EditProfile(int id, FormCollection profil)
+        {
+            try
+            {
+                using (Gr8DbContext gr8Db = new Gr8DbContext())
+                {
+                    var result = gr8Db.Users.SingleOrDefault(o => o.Id == id);
+                    result.FirstName = Request["FirstName"];
+                    result.LastName = Request["LastName"];
+
+                    var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
+                    var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
+                    
+
+
+
+
+                    
+                    
+
+                    gr8Db.SaveChanges();
+                }
+                return Redirect(Url.Action("MyProfile", "Profile"));
+
+            }
+
+            catch {
+                return View();
+            }
+        }
 
         public ActionResult InactivateAccount()
         {
@@ -128,7 +171,7 @@ namespace gr8Match.Controllers
         }
 
       
-        public ActionResult ConfirmFrinedRequest(int? id)
+        public ActionResult ConfirmFriendRequest(int? id)
         {
 
             var MyId = ThisUser();
@@ -141,7 +184,7 @@ namespace gr8Match.Controllers
             return RedirectToAction("MyFriends", "Profile");
         }
 
-        public ActionResult DenyFrinedRequest(int? id)
+        public ActionResult DenyFriendRequest(int? id)
         {
 
             var MyId = ThisUser();
