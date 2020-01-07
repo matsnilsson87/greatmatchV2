@@ -11,13 +11,22 @@ namespace gr8Match.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Förnamn")]
+        [Required(ErrorMessage = "Du måste fylla i ett förnamn.")]
         public string FirstName { get; set; }
+
+        [Display(Name = "Efternamn")]
+        [Required(ErrorMessage = "Du måste fylla i ett efternamn.")]
         public string LastName { get; set; }
 
+        [Display(Name = "Födelsedatum")]
+        [Required(ErrorMessage = "Du måste fylla i ett födelsedatum.")]
         [Column(TypeName = "date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateOfBirth { get; set; }
 
+        [Display(Name = "Profilbild")]
         public string ProfileImage { get; set; }
 
         public bool Active { get; set; }

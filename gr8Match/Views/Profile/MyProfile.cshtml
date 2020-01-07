@@ -1,8 +1,12 @@
 ﻿@model gr8Match.Models.MyProfileViewModel
+    
+
 
 
     @{
         ViewBag.Title = "Min profil";
+        
+        
     }
 
 
@@ -14,6 +18,7 @@
         {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
 
         @Html.ActionLink("Byt profilbil", "Index", "Image")
+        @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new {id = Model.MyUser.Id}, null)
         @if (Model.MyUser.Active == true)
         {
             @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
