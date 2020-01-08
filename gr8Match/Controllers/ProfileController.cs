@@ -90,6 +90,16 @@ namespace gr8Match.Controllers
                     DateTime parsedDate = DateTime.Parse(dateInput);
                     result.DateOfBirth = parsedDate;
 
+                    var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
+                    var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
+                    
+
+
+
+
+                    
+                    
+
                     gr8Db.SaveChanges();
                 }
                 return Redirect(Url.Action("MyProfile", "Profile"));
