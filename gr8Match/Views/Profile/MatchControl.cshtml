@@ -1,0 +1,40 @@
+﻿@using gr8Match.Models
+@model MatchControlViewModel
+
+@{
+    ViewBag.Title = "Passar vi ihop?";
+    
+}
+
+    <div>      
+            @if (Model.Interests.Count == 0)
+            {
+                <p>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName kanske inte passar så bra ihop eftersom ni inte delar några gemensamma intressen</p>
+            }
+
+            else
+            {
+              <p>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName skulle passa bra ihop eftersom ni delar dessa intressen tillsammans:</p>
+
+                foreach (var i in Model.Interests)
+                {
+
+
+                <table class="table">
+
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                    </tr>
+
+                </table>
+                    }
+                }
+
+
+        
+
+
+    </div>
+
