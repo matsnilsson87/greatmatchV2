@@ -29,27 +29,35 @@
         }
     </div>
     
-<div>
-    <table class="table">
+    <div>
+        <table class="table">
 
-        <tr>
-            <td>
-                @Model.MyUser.FirstName
+            <tr>
+                <td>
+                    @Model.MyUser.FirstName
 
-            </td>
-            <td>
-                @Model.MyUser.LastName
-            </td>
-            <td>
-                @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
-                @age år
-            </td>
+                </td>
+                <td>
+                    @Model.MyUser.LastName
+                </td>
+                <td>
+                    @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
+                    @age år
+                </td>
 
-        </tr>
+            </tr>
 
-    </table>
-</div>
+        </table>
+    </div>
+    <div>
+        <hr />
+        <h2>Mina senaste besök</h2>
+        <div class="visitor">
+            <input type="hidden" id="myId" value=@Model.MyUser.Id />
 
+        </div>
+        </br>
+    </div>
 <div>
 
     Mina Intressen  @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
@@ -82,9 +90,14 @@
                 <td>
                     @p.WrittenBy
                 </td>
+                <td>
+
+                </td>
             </tr>
 
         }
     </table>
 
 </div>
+
+<script src="~/Scripts/visitor.js"></script>
