@@ -11,24 +11,25 @@
 
     <script src="~/Scripts/ConfirmDelete.js"></script>
 
-<div>
-    @if (Model.MyUser.ProfileImage == null)
-    {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+    <div>
+        @if (Model.MyUser.ProfileImage == null)
+        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
-    else
-    {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
+        else
+        {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
 
-    @Html.ActionLink("Byt profilbil", "Index", "Image")
-    @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new { id = Model.MyUser.Id }, null)
-    @if (Model.MyUser.Active == true)
-    {
-        @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
-    }
-    else
-    {
-        @Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")
-    }
-</div>
+        @Html.ActionLink("Byt profilbil", "Index", "Image")
+        @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new { id = Model.MyUser.Id }, null)
+        @if (Model.MyUser.Active == true)
+        {
+            @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
+        }
+        else
+        {
+            @Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")
+        }
+        @Html.ActionLink("Ladda ner profil som XML", "SaveAsXML", "Profile")
+    </div>
 
 <div>
     <table class="table">
