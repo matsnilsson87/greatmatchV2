@@ -42,7 +42,7 @@ function sendMessage() {
     const writtenTo = $('#user-id').val();
     const writtenBy = $('#user-myid').val();
     if (text) {
-        alert(text + datum + writtenTo + writtenBy);
+
         const messageObj = {
             Text: text,
             Datum: datum,
