@@ -37,6 +37,10 @@
             <td>
                 @Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)
             </td>
+            <td>
+                @Html.ActionLink("Passar vi ihop?", "MatchControl", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)      
+            </td>
+            
         </tr>
 
     </table>
@@ -44,7 +48,7 @@
 
 <div>
 
-    Mina Intressen
+    Intressen
 
     <table class="table">
 

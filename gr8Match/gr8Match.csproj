@@ -196,6 +196,7 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Interests.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MatchControlViewModel.cs" />
     <Compile Include="Models\MyProfileViewModel.cs" />
     <Compile Include="Models\OtherProfileViewModel.cs" />
     <Compile Include="Models\Posts.cs" />
@@ -282,6 +283,7 @@
     <Content Include="Views\Profile\EditProfile.cshtml" />
     <Content Include="Views\Profile\AddInterests.cshtml" />
     <Content Include="Views\Profile\DeleteInterest.cshtml" />
+    <Content Include="Views\Profile\MatchControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using gr8Match.Models;
+
+
 
 namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
     {
+        
+
         // GET: User
         public ActionResult Index()
         {
@@ -86,16 +89,6 @@ namespace gr8Match.Controllers
                     string dateInput = Request["DateOfBirth"];
                     DateTime parsedDate = DateTime.Parse(dateInput);
                     result.DateOfBirth = parsedDate;
-
-                    var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
-                    var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
-                    
-
-
-
-
-                    
-                    
 
                     gr8Db.SaveChanges();
                 }
@@ -219,6 +212,23 @@ namespace gr8Match.Controllers
             ctx.SaveChanges();
             return View(viewModel);
         }
+        
+        public ActionResult MatchControl(int id)
+        {
+            var myId = ThisUser();           
+            var ctx = new Gr8DbContext();
+
+            var viewmodel = new MatchControlViewModel
+            {
+                Interests = ctx.Database.SqlQuery<string>("Select Name From Interests Where Id in (Select Interest From UserInterests Where UserId=" + myId + ") And Id in (Select Interest From UserInterests Where UserId=" + id + ")").ToList(),
+                OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault()
+            };   
+            
+            return View(viewmodel);
+
+        }
+
+      
         public ActionResult MyFriends()
         {
             var id = User.Identity.GetUserId();
