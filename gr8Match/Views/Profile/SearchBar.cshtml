@@ -21,7 +21,7 @@
         {
             <tr>
                 <td>
-                    @item.FirstName @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
+                    @item.FirstName @item.LastName @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
                 </td>
             </tr>
         }

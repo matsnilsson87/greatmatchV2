@@ -253,6 +253,19 @@ namespace gr8Match.Controllers
             return View(viewModel);
         }
 
+        public ActionResult MatchSearch()
+        {
+            
+            var MyId = ThisUser();
+            var ctx = new Gr8DbContext();
+            var viewmodel = new SeachBarViewModel
+            {
+                User = ctx.Database.SqlQuery<User>("Select * From Users Where Id in (Select UserId From UserInterests Where Interest in (Select Interest From UserInterests Where UserId =" +  MyId + ")) And Id !=" +  MyId).ToList()
+            };
+
+            return View(viewmodel);
+        }
+
 
         public  ActionResult SearchBar(string search)
         {

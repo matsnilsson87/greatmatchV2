@@ -1,0 +1,42 @@
+﻿@model gr8Match.Models.SeachBarViewModel
+@{
+    ViewBag.Title = "Hitta Passande Partner";
+}
+
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Passande Partners med samma intressen som dig:</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        
+        @if (Model.User.Count() == 0)
+        {
+            <tr>
+                <td>
+                    <h6>Du har inga passande partners just nu. Ge inte upp!</h6>
+                </td>
+            </tr>
+        }
+
+        else
+        {
+            foreach (var item in Model.User)
+            {
+                <tr>
+                    <td>
+                        @item.FirstName @item.LastName @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { item.Id }, htmlAttributes: null)
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+
