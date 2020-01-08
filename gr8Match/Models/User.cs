@@ -13,6 +13,7 @@ namespace gr8Match.Models
         public int Id { get; set; }
 
         [Display(Name = "Förnamn")]
+        //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         [Required(ErrorMessage = "Du måste fylla i ett förnamn.")]
         public string FirstName { get; set; }
 
