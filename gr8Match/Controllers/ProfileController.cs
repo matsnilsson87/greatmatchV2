@@ -111,15 +111,13 @@ namespace gr8Match.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult AddInterests()
+        public ActionResult DeletePost(int id) 
         {
-            using (Gr8DbContext gr8Db = new Gr8DbContext())
-            {
-                
-                return View();
+   
+            var ctx = new Gr8DbContext();
+            ctx.Database.ExecuteSqlCommand("Delete from Posts where id = " + id);
 
-            }
+            return RedirectToAction("MyProfile", "Profile");
         }
         
         [HttpPost]

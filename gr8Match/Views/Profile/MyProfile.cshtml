@@ -91,7 +91,7 @@
                     @p.WrittenBy
                 </td>
                 <td>
-
+                    @Html.ActionLink("Ta bort", "DeletePost", "Profile", routeValues: new { p.Id }, htmlAttributes: null)
                 </td>
             </tr>
 
