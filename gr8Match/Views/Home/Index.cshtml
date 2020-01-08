@@ -6,39 +6,42 @@
 @model UserViewModel
 
 <div id="homepageJumbotron" class="jumbotron">
-    <h1>Välkommen @if (Request.IsAuthenticated) {@Model.user.FirstName} till Gr8 Match!</h1>
+    <h1>
+        Välkommen @if (Request.IsAuthenticated)
+        {@Model.user.FirstName} till Gr8 Match!
+    </h1>
 
-<p class="lead">Dejtingsidan som garanterar en Great Match för din katt! </p>
+    <p class="lead">Dejtingsidan som garanterar en Great Match för din katt! </p>
 
 </div>
 
-@*@if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated)
 {
-    <div class="row">
-        <div class="col-md-8">
-            <div class="catBox">
-                <h2>Välkommen @Model.user.FirstName!</h2>
-                
-            </div>
-        </div>
-        <div class="col-md-4">
+    @*<div class="row">
+            <div class="col-md-8">
+                <div class="catBox">
+                    <h2>Välkommen @Model.user.FirstName!</h2>
 
-            @if (Model.user.Active == true)
-            {<div class="catBox">
-                    <h2>Vill du avregistrera dig?</h2>
-                    <p>Ja du kan ju försöka med knappen här under....</p>
-                    <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "InactivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
                 </div>
-            }
-            else
-            {<div class="catBox">
-                    <h2>Meh Hallå!?!?!?</h2>
-                    <p>Ditt konto är ju avaktiverat, klicka här under för att aktivera det igen</p>
-                    <p class="btn btn-default">@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
-                </div>
-            }
-        </div>
-    </div>
+            </div>
+            <div class="col-md-4">
+
+                @if (Model.user.Active == true)
+                {<div class="catBox">
+                        <h2>Vill du avregistrera dig?</h2>
+                        <p>Ja du kan ju försöka med knappen här under....</p>
+                        <p class="btn btn-default">@Html.ActionLink("Avregistrera konto", "InactivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+                    </div>
+                }
+                else
+                {<div class="catBox">
+                        <h2>Meh Hallå!?!?!?</h2>
+                        <p>Ditt konto är ju avaktiverat, klicka här under för att aktivera det igen</p>
+                        <p class="btn btn-default">@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile", routeValues: null, htmlAttributes: new { id = "registerLink" }) &raquo;</p>
+                    </div>
+                }
+            </div>
+        </div>*@
 
 
 }
@@ -71,7 +74,7 @@ else
 <br />
 <br />
 <br />
-<br />*@
+<br />
 
 <h1 align="center">Några av våra användare:</h1>
 
