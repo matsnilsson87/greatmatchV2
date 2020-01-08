@@ -120,7 +120,18 @@ namespace gr8Match.Controllers
 
             return RedirectToAction("MyProfile", "Profile");
         }
-        
+
+        [HttpGet]
+        public ActionResult AddInterests()
+        {
+            using (Gr8DbContext gr8Db = new Gr8DbContext())
+            {
+
+                return View();
+
+            }
+        }
+
         [HttpPost]
         public ActionResult AddInterests(FormCollection profil)
         {
