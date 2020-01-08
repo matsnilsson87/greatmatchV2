@@ -14,20 +14,19 @@ function getName() {
 function updateMessageList() {
     // Hämta användarid från den dolda input-taggen:
     const id = $('#user-id').val();
-    var userId = parseInt(id, 10)
-    var name = "Mats";
-    
+    var userId = parseInt(id, 10);
+
     $.get('/api/posts/getpostslist/' + userId)
         .then((resp) => {
             if (resp && Array.isArray(resp)) {
                 $('#message-list').html('');
                 resp.forEach((post) => {
-                    //const isMine = post.WrittenTo === userId;
+
                     $('#messagelist')
                         .append(
                             `<article class="message">
                                     <header class="header">
-                                        <h6>${name}</h6>
+                                        <h6>Skrivet av användare:  ${post.WrittenBy}, ${post.Datum} </h6>
                                     </header>
                                     <main class="body">${post.Text}</main>
                                 </article>`
@@ -42,17 +41,19 @@ function sendMessage() {
     const datum = new Date().toISOString();
     const writtenTo = $('#user-id').val();
     const writtenBy = $('#user-myid').val();
-    if (newMessage) {
+    if (text) {
+        alert(text + datum + writtenTo + writtenBy);
         const messageObj = {
             Text: text,
             Datum: datum,
             WrittenTo: writtenTo,
             WrittenBy: writtenBy
         };
-        $.post('/api/chatmessageapi/send', messageObj)
+        $.post('/api/posts/send', messageObj)
             .then((resp) => {
-                if (resp === "Ok") {
+                if (resp === "Meddelandet skickat") {
                     $('#new-message').val('');
+                    $('.message').remove();
                     updateMessageList();
                 } else {
                     alert('Något gick fel!');

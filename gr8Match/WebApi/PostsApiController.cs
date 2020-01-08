@@ -30,17 +30,19 @@ namespace gr8Match.WebApi
         }
         // /api/posts/writtenbyname
         [HttpGet]
-        public string WrittenByName(int id) {
-            string name = ctx.Users.SqlQuery("select FirstName + ' ' + LastName from Users where Id = " + id).ToString();
-            return name;
+        public IHttpActionResult WrittenByName(int id) {
+
+            User thisUser = ctx.Users.SqlQuery("select * from Users where Id = " + id).FirstOrDefault();
+         
+            return Ok (thisUser);
         }
 
         // /api/postsapi/send
         [HttpPost]
-        public string Send([FromBody]PostsViewModel model) {
+        public string Send([FromBody]Posts thePost) {
             try
             {
-                ctx.Posts.Add(model.Post);
+                ctx.Posts.Add(thePost);
                 ctx.SaveChanges();
                 return "Meddelandet skickat";
 
