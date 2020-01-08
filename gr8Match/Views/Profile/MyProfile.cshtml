@@ -1,63 +1,64 @@
 ﻿@model gr8Match.Models.MyProfileViewModel
-    
 
 
 
-    @{
-        ViewBag.Title = "Min profil";
-        
-        
+
+@{
+    ViewBag.Title = "Min profil";
+
+
+}
+
+    <script src="~/Scripts/ConfirmDelete.js"></script>
+
+<div>
+    @if (Model.MyUser.ProfileImage == null)
+    {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+
+    else
+    {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
+
+    @Html.ActionLink("Byt profilbil", "Index", "Image")
+    @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new { id = Model.MyUser.Id }, null)
+    @if (Model.MyUser.Active == true)
+    {
+        @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
     }
+    else
+    {
+        @Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")
+    }
+</div>
 
+<div>
+    <table class="table">
 
-    <div>
-        @if (Model.MyUser.ProfileImage == null)
-        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+        <tr>
+            <td>
+                @Model.MyUser.FirstName
 
-        else
-        {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
+            </td>
+            <td>
+                @Model.MyUser.LastName
+            </td>
+            <td>
+                @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
+                @age år
+            </td>
 
-        @Html.ActionLink("Byt profilbil", "Index", "Image")
-        @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new {id = Model.MyUser.Id}, null)
-        @if (Model.MyUser.Active == true)
-        {
-            @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
-        }
-        else
-        {
-            @Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")
-        }
+        </tr>
+
+    </table>
+</div>
+<div>
+    <hr />
+    <h2>Mina senaste besök</h2>
+    <div class="visitor">
+        <input type="hidden" id="myId" value=@Model.MyUser.Id />
+
     </div>
-    
-    <div>
-        <table class="table">
-
-            <tr>
-                <td>
-                    @Model.MyUser.FirstName
-
-                </td>
-                <td>
-                    @Model.MyUser.LastName
-                </td>
-                <td>
-                    @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
-                    @age år
-                </td>
-
-            </tr>
-
-        </table>
-    </div>
-    <div>
-        <hr />
-        <h2>Mina senaste besök</h2>
-        <div class="visitor">
-            <input type="hidden" id="myId" value=@Model.MyUser.Id />
-
-        </div>
-        </br>
-    </div>
+    </br>
+</div>
 <div>
 
     Mina Intressen  @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
@@ -80,7 +81,7 @@
     Mina Meddelande
 
     <table class="table">
-        
+
         @foreach (var p in Model.MyPosts)
         {
             <tr>
@@ -91,7 +92,15 @@
                     @p.WrittenBy
                 </td>
                 <td>
-                    @Html.ActionLink("Ta bort", "DeletePost", "Profile", routeValues: new { p.Id }, htmlAttributes: null)
+                    <input type="button" id="btnpopu" value="Ta bort inlägg" onclick="showModal();" />
+                    <div id="confirmModal" class="modal">
+                        <div class="modal-content">
+                            <p>Vill du verkligen ta bort detta inlägget?</p>
+                            @Html.ActionLink("Ta bort", "DeletePost", "Profile", routeValues: new { p.Id }, htmlAttributes: null)
+                            @Html.ActionLink("Ångra", "MyProfile", "Profile")
+                        </div>
+                    </div>
+
                 </td>
             </tr>
 
