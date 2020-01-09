@@ -1,9 +1,10 @@
 ﻿@model gr8Match.Models.Image
 
-@using (Html.BeginForm("Add", "Image", FormMethod.Post, new { enctype="multipart/form-data"})) 
+@using (Html.BeginForm("Add", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
+
     <div class="form-horizontal">
         <h4>Image</h4>
         <hr />
@@ -20,11 +21,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImgPath, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="ImageFile" >
+                @*@Html.EditorFor(model => model.ImgPath, new { htmlAttributes = new { type = "file" } })
+                @Html.ValidationMessageFor(model => model.ImgPath, "", new { @class = "text-danger" })*@
+                <input type="file" name="ImageFile" required>
             </div>
         </div>
 
-        <div class="form-group"  style="display: none; ">
+        <div class="form-group" style="display: none; ">
             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
@@ -34,7 +37,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default"/>
             </div>
         </div>
     </div>
@@ -43,3 +46,9 @@
 <div>
     @Html.ActionLink("Tillbaka", "MyProfile", "Profile")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
