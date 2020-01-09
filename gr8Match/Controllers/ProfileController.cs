@@ -132,17 +132,9 @@ namespace gr8Match.Controllers
                     var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
                     var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
 
-
-
-
-
-
-
-
                     gr8Db.SaveChanges();
                 }
                 return Redirect(Url.Action("MyProfile", "Profile"));
-
             }
 
             catch (Exception e)
@@ -374,9 +366,9 @@ namespace gr8Match.Controllers
                 var ctx = new Gr8DbContext();
                 var viewModel = new ProfileIndexViewModel
                 {
-                    Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) and Active = 'True'")
+                    Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) and Active = 'True' order by FirstName")
                                                         .ToList(),
-                    FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True'")
+                    FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True' order by FirstName")
                                                         .ToList()
 
                     // denna kommentar vill man ha
@@ -398,7 +390,7 @@ namespace gr8Match.Controllers
                 var ctx = new Gr8DbContext();
                 var viewmodel = new SeachBarViewModel
                 {
-                    User = ctx.Database.SqlQuery<User>("Select * From Users Where Id in (Select UserId From UserInterests Where Interest in (Select Interest From UserInterests Where UserId =" + MyId + ")) And Id !=" + MyId).ToList()
+                    User = ctx.Database.SqlQuery<User>("Select * From Users Where Id in (Select UserId From UserInterests Where Interest in (Select Interest From UserInterests Where UserId =" + MyId + ")) And Id !=" + MyId + " order by FirstName").ToList()
                 };
 
                 return View(viewmodel);
@@ -419,7 +411,7 @@ namespace gr8Match.Controllers
                 var ctx = new Gr8DbContext();
                 var lista = new SeachBarViewModel
                 {
-                    User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active == true && x.Id != MyId || search == null && x.Active == true && x.Id != MyId).ToList()
+                    User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active == true && x.Id != MyId || search == null && x.Active == true && x.Id != MyId).OrderBy(i => i.FirstName).ToList()
                 };
 
                 return View(lista);
