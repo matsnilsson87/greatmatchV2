@@ -526,9 +526,10 @@ namespace gr8Match.Controllers
 
         public ActionResult RemoveCategory(int Id) 
         {
+            int myId = ThisUser();
             int friendId = Id;
             var ctx = new Gr8DbContext();
-
+            ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
 
             return RedirectToAction("MyFriends", "Profile");
         }
