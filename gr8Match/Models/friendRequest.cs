@@ -23,6 +23,7 @@ namespace gr8Match.Models
 
         public bool Accepted   { get; set; }
 
-  
+        [InverseProperty("Friendship")]
+        public ICollection<FriendInCategory> Friendships { get; set; }
     }
 }

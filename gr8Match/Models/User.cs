@@ -51,6 +51,9 @@ namespace gr8Match.Models
         [InverseProperty("User1")]
         public ICollection<Image> Images { get; set; }
 
+        [InverseProperty("User")]
+        public ICollection<FriendInCategory> FriendCategories { get; set; }
+
         public ICollection<UserInterests> UserInterests { get; set; }
     }
 }
