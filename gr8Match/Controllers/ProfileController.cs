@@ -524,6 +524,28 @@ namespace gr8Match.Controllers
             return category;
         }
 
+        public ActionResult AddCategory(int Id)
+        {
+            var ctx = new Gr8DbContext();
+            var viewModel = new CategoryViewModel()
+            {
+                FriendId = Id,
+                CategoryList = ctx.Database.SqlQuery<Category>("Select * from categories").ToList()
+        };
+
+            return View(viewModel);
+        }
+
+        public ActionResult AddCategories(int Id, int friendId) 
+        {
+            var categoryId = Id;
+            var ctx = new Gr8DbContext();
+            var myId = ThisUser();
+            int friendshipId = ctx.Database.SqlQuery<int>("Select Id from FriendRequests where FromUser = " + myId + " and ToUser = " + friendId + " or FromUser = " + friendId + " and ToUser = " + myId).FirstOrDefault();
+            ctx.Database.ExecuteSqlCommand("Insert into FriendInCategories Values(" + friendshipId + ", " + myId + ", " + categoryId + ")");
+            return RedirectToAction("MyFriends", "Profile");
+        }
+
         public ActionResult RemoveCategory(int Id) 
         {
             int myId = ThisUser();

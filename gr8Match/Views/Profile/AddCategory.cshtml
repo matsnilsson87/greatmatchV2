@@ -1,0 +1,14 @@
+﻿@using gr8Match.Models
+@model CategoryViewModel
+
+@{
+    ViewBag.Title = "Lägg till en kategori";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+@foreach (var c in @Model.CategoryList)
+{
+<p>@Html.ActionLink(@c.CategoryName, "AddCategories", "Profile", routeValues: new { c.Id, @Model.FriendId}, htmlAttributes: null)</p>
+}

@@ -34,7 +34,7 @@
 
                 <td> @Category </td>
                     @if (@Category == "Kattegorilös och utan klös")
-                    {<td> @Html.ActionLink("Lägg till kattegori", "MyFriends", "Profile")</td>}
+                    {<td> @Html.ActionLink("Lägg till kattegori", "AddCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>}
                     else 
                     {<td> @Html.ActionLink("Ta bort kattegori", "RemoveCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>}
 
