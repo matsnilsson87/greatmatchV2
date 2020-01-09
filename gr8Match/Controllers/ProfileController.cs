@@ -509,6 +509,30 @@ namespace gr8Match.Controllers
 
         }
 
+        public static string GetCategory(int Id, string identityId) 
+        {    
+            int friendId = Id;
+            var ctx = new Gr8DbContext();
+            int myId = ctx.Database.SqlQuery<int>("Select Id from Users where identityId = '" + identityId + "'").FirstOrDefault();
+            string category = ctx.Database.SqlQuery<string>("Select CategoryName From Categories join FriendInCategories on Categories.Id = FriendInCategories.CategoryId join FriendRequests on FriendRequests.Id = FriendInCategories.FriendshipId where FriendRequests.FromUser = " + friendId + " or FriendRequests.ToUser = " + friendId + " and FriendInCategories.UserId = " + myId).FirstOrDefault();
+
+            if (category == null) 
+            {
+                category = "Kattegorilös och utan klös";
+            }
+
+            return category;
+        }
+
+        public ActionResult RemoveCategory(int Id) 
+        {
+            int friendId = Id;
+            var ctx = new Gr8DbContext();
+
+
+            return RedirectToAction("MyFriends", "Profile");
+        }
+
         public ActionResult SaveAsXML()
         {
             try

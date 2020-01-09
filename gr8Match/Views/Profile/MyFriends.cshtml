@@ -1,38 +1,47 @@
 ﻿@using gr8Match.Models
 @model ProfileIndexViewModel
+@using gr8Match.Controllers
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Mina Vänner";
 }
 
 @Html.Partial("NewFriendRequests")
 
-    <table class="table">
-        <h2>Här är dina vänner:</h2>
-        @if (Model.Users.Count == 0)
+<table class="table">
+    <h2>Här är dina vänner:</h2>
+    @if (Model.Users.Count == 0)
+    {
+        <tr>
+            <td>Du har ju inga vänner :'(</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var friend in Model.Users)
         {
+            var Category = @ProfileController.GetCategory(friend.Id, User.Identity.GetUserId());
             <tr>
-                <td>Du har ju inga vänner :'(</td>
+                <td>
+                    @if (friend.ProfileImage == null)
+                    {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+
+                    else
+                    {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
+                </td>
+                <td>@friend.FirstName </td>
+                <td> @friend.LastName</td>
+
+                <td> @Category </td>
+                    @if (@Category == "Kattegorilös och utan klös")
+                    {<td> @Html.ActionLink("Lägg till kattegori", "MyFriends", "Profile")</td>}
+                    else 
+                    {<td> @Html.ActionLink("Ta bort kattegori", "RemoveCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>}
+
+                <td> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
+
             </tr>
         }
-        else
-        {
-            foreach (var friend in Model.Users)
-            {
-    <tr>
-        <td>
-            @if (friend.ProfileImage == null)
-            {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
-
-            else
-            {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
-        </td>
-        <td>@friend.FirstName </td>
-        <td> @friend.LastName</td>
-        <td> @friend.LastName</td>
-        <td> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
-
-    </tr>
-            }
-        }
-    </table>
+    }
+</table>
 <hr />
