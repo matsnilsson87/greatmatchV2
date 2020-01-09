@@ -13,11 +13,19 @@ namespace gr8Match.Controllers
        
         public static int CountFriendRequests(String _id)
         {
-            var id = _id;
-            var ctx = new Gr8DbContext();
-            int count = ctx.Database.SqlQuery<int>("select count(*) from FriendRequests where ToUser = (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')").Sum();
-            
-            return count;
+            try
+            {
+                var id = _id;
+                var ctx = new Gr8DbContext();
+                int count = ctx.Database.SqlQuery<int>("select count(*) from FriendRequests where ToUser = (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')").Sum();
+
+                return count;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
         }
 
         public static int ThisUser(string _id)

@@ -11,10 +11,17 @@ namespace gr8Match.Controllers
 {
     public class ImageController : Controller
     {
-       [HttpGet]
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            try {
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public int ThisUser()
@@ -42,6 +49,8 @@ namespace gr8Match.Controllers
         public ActionResult Add(Image image)
 
         {
+            try
+            {
                 int thisId = ThisUser();
                 string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
                 string fileExt = Path.GetExtension(image.ImageFile.FileName);
@@ -50,19 +59,25 @@ namespace gr8Match.Controllers
                 image.Title = fileName;
                 image.UserId = thisId;
                 fileName = Path.Combine(Server.MapPath("~/Images/UserImages/"), fileName);
-                
+
                 image.ImageFile.SaveAs(fileName);
-               
+
 
 
                 var ctx = new Gr8DbContext();
                 ctx.Images.Add(image);
-                ctx.Database.ExecuteSqlCommand("Update Users Set ProfileImage = '"+image.ImgPath+"' where Id = '" + thisId.ToString() + "'");
+                ctx.Database.ExecuteSqlCommand("Update Users Set ProfileImage = '" + image.ImgPath + "' where Id = '" + thisId.ToString() + "'");
 
                 ctx.SaveChanges();
-                
 
-            return RedirectToAction("MyProfile", "Profile");
+
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
 

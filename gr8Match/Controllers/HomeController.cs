@@ -12,41 +12,66 @@ namespace gr8Match.Controllers
     {
         public ActionResult Index()
         {
-            var Users = new List<User>();
-            var ctx = new Gr8DbContext();
-            Users = ctx.Users.ToList();
-            var _user =  new User();
-
-            foreach (var u in Users)
+            try
             {
-                if (u.IdentityID == User.Identity.GetUserId())
+                var Users = new List<User>();
+                var ctx = new Gr8DbContext();
+                Users = ctx.Users.ToList();
+                var _user = new User();
+
+                foreach (var u in Users)
                 {
-                    _user = u;
+                    if (u.IdentityID == User.Identity.GetUserId())
+                    {
+                        _user = u;
+                    }
+
                 }
+
+                var viewModel = new UserViewModel(_user)
+                {
+                    Profiles = ctx.Database.SqlQuery<User>("select top 6 * from Users where Active = 'True' and IdentityID != '" + User.Identity.GetUserId() + "' order by newid()").ToList()
+
+                };
+
+
+                return View(viewModel);
             }
-
-            var viewModel = new UserViewModel(_user)
+            catch (Exception e)
             {
-                Profiles = ctx.Database.SqlQuery<User>("select top 6 * from Users where Active = 'True' and IdentityID != '"+ User.Identity.GetUserId() +"' order by newid()").ToList()
-
-            };
-
-
-            return View(viewModel);
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            try
+            {
+                ViewBag.Message = "Your application description page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                ViewBag.Message = "Your contact page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
     }
 }

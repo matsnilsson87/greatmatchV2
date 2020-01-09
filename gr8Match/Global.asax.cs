@@ -24,5 +24,6 @@ namespace gr8Match
                 new DropCreateDatabaseIfModelChanges<Gr8DbContext>()
                 );
         }
+
     }
 }

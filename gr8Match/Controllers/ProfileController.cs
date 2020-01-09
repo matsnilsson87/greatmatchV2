@@ -11,70 +11,109 @@ namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
     {
-        
+
 
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+
+            }
         }
         [HttpPost]
         public ActionResult AddUser(User model)
         {
-            var ctx = new Gr8DbContext();
-            model.Active = true;
-            ctx.Users.Add(model);
-            ctx.SaveChanges();
+            try
+            {
+                var ctx = new Gr8DbContext();
+                model.Active = true;
+                ctx.Users.Add(model);
+                ctx.SaveChanges();
 
-            return Redirect(Url.Action("MyProfile", "Profile"));
+                return Redirect(Url.Action("MyProfile", "Profile"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
+
         }
         public int ThisUser()
         {
-
-            var Users = new List<User>();
-            var ctx = new Gr8DbContext();
-            Users = ctx.Users.ToList();
-
-            int thisUserId = 0;
-            foreach (var u in Users)
+            try
             {
-                if (u.IdentityID == User.Identity.GetUserId())
+                var Users = new List<User>();
+                var ctx = new Gr8DbContext();
+                Users = ctx.Users.ToList();
+
+                int thisUserId = 0;
+                foreach (var u in Users)
                 {
-                    thisUserId = u.Id;
-                    Console.WriteLine(thisUserId);
-                    return thisUserId;
+                    if (u.IdentityID == User.Identity.GetUserId())
+                    {
+                        thisUserId = u.Id;
+                        Console.WriteLine(thisUserId);
+                        return thisUserId;
+                    }
                 }
+                return 0;
             }
-            return 0;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
         }
-
-
 
         public ActionResult MyProfile()
         {
-            int id = ThisUser();
-            var ctx = new Gr8DbContext();
-            var viewModel = new MyProfileViewModel
+            try
             {
-                MyUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-           
-                MyInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
-                MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
-            };
-            return View(viewModel);
+                int id = ThisUser();
+                var ctx = new Gr8DbContext();
+                var viewModel = new MyProfileViewModel
+                {
+                    MyUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
+
+                    MyInterests = ctx.Database.SqlQuery<string>("elect Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                    MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
+                };
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
-        
+
         [HttpGet]
         public ActionResult EditProfile(int id)
         {
-            using(Gr8DbContext gr8Db = new Gr8DbContext())
+            try
             {
-                
-                return View(gr8Db.Users.FirstOrDefault(o => o.Id == id));
-                    
+                using (Gr8DbContext gr8Db = new Gr8DbContext())
+                {
+
+                    return View(gr8Db.Users.FirstOrDefault(o => o.Id == id));
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
         }
-        
+
         [HttpPost]
         public ActionResult EditProfile(int id, FormCollection profil)
         {
@@ -85,20 +124,20 @@ namespace gr8Match.Controllers
                     var result = gr8Db.Users.SingleOrDefault(o => o.Id == id);
                     result.FirstName = Request["FirstName"];
                     result.LastName = Request["LastName"];
-                    
+
                     string dateInput = Request["DateOfBirth"];
                     DateTime parsedDate = DateTime.Parse(dateInput);
                     result.DateOfBirth = parsedDate;
 
                     var lista1 = gr8Db.Database.SqlQuery<string>("Select Name From Interests");
                     var lista2 = gr8Db.Database.SqlQuery<string>("Select Name From Interests Join UserInterests On Interests.Id = UserInterests.Interest Where UserId ='" + id.ToString() + "'");
-                    
 
 
 
 
-                    
-                    
+
+
+
 
                     gr8Db.SaveChanges();
                 }
@@ -106,265 +145,397 @@ namespace gr8Match.Controllers
 
             }
 
-            catch {
-                return View();
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
         }
 
-        public ActionResult DeletePost(int id) 
+        public ActionResult DeletePost(int id)
         {
-            
+            try
+            {
                 var ctx = new Gr8DbContext();
                 ctx.Database.ExecuteSqlCommand("Delete from Posts where id = " + id);
-            
 
-            return RedirectToAction("MyProfile", "Profile");
+
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         [HttpGet]
         public ActionResult AddInterests()
         {
-            using (Gr8DbContext gr8Db = new Gr8DbContext())
+            try
             {
+                using (Gr8DbContext gr8Db = new Gr8DbContext())
+                {
 
-                return View();
+                    return View();
 
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
         }
 
         [HttpPost]
         public ActionResult AddInterests(FormCollection profil)
         {
-
-            var MyId = ThisUser();
-            var ctx = new Gr8DbContext();
-            string intresse = Request["Name"];
-            var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
-            bool boolean = true;
-            foreach(var namn in lista1)
+            try
             {
-                if (intresse.Equals(namn))
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                string intresse = Request["Name"];
+                var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
+                bool boolean = true;
+                foreach (var namn in lista1)
                 {
-                    boolean = false;
-                   
+                    if (intresse.Equals(namn))
+                    {
+                        boolean = false;
+
+                    }
+
                 }
-                                  
-            }
 
-            if(boolean)
+                if (boolean)
+                {
+                    ctx.Database.ExecuteSqlCommand("Insert into Interests Values('" + intresse + "')");
+                    ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+                }
+
+                else
+                {
+                    ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+                }
+
+                ctx.SaveChanges();
+
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
             {
-                ctx.Database.ExecuteSqlCommand("Insert into Interests Values('" + intresse + "')");
-                ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
-
-            else
-            {
-                ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
-            }
-
-            ctx.SaveChanges();
-
-            return RedirectToAction("MyProfile", "Profile");
         }
 
         [HttpGet]
         public ActionResult DeleteInterest()
         {
-            using (Gr8DbContext gr8Db = new Gr8DbContext())
+            try
             {
+                using (Gr8DbContext gr8Db = new Gr8DbContext())
+                {
 
-                return View();
+                    return View();
 
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
         }
 
         [HttpPost]
         public ActionResult DeleteInterest(FormCollection profil)
         {
+            try
+            {
+                var MyId = ThisUser();
 
-            var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                string intresse = Request["Name"];
 
-            var ctx = new Gr8DbContext();
-            string intresse = Request["Name"];
+                ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=(Select Id From Interests where Name='" + intresse + "')");
+                ctx.SaveChanges();
 
-            ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=(Select Id From Interests where Name='" + intresse + "')");
-            ctx.SaveChanges();
-
-            return RedirectToAction("MyProfile", "Profile");
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
 
         public ActionResult InactivateAccount()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
-
         public ActionResult Deactivate()
         {
-            int id = ThisUser();
-            var ctx = new Gr8DbContext();
-            ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'False' Where Id =" + id);
-            ctx.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                int id = ThisUser();
+                var ctx = new Gr8DbContext();
+                ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'False' Where Id =" + id);
+                ctx.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult ActivateAccount()
         {
-            int id = ThisUser();
-            var ctx = new Gr8DbContext();
-            ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'True' Where Id =" + id);
-            ctx.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult OtherProfile(int id) {
-
-            var myId = ThisUser();
-            var time = DateTime.Now;
-            var ctx = new Gr8DbContext();
-            var viewModel = new OtherProfileViewModel
+            try
             {
-                OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-                OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
-               
-            };
-            ctx.Database.ExecuteSqlCommand("Insert into Visitors Values ("+ myId +", "+ id +", '"+ time +"')");
-            ctx.SaveChanges();
-            return View(viewModel);
+                int id = ThisUser();
+                var ctx = new Gr8DbContext();
+                ctx.Database.ExecuteSqlCommand("Update Users Set Active = 'True' Where Id =" + id);
+                ctx.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
-        
+
+        public ActionResult OtherProfile(int id)
+        {
+            try
+            {
+                var myId = ThisUser();
+                var time = DateTime.Now;
+                var ctx = new Gr8DbContext();
+                var viewModel = new OtherProfileViewModel
+                {
+                    OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
+                    OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
+
+                };
+                ctx.Database.ExecuteSqlCommand("Insert into Visitors Values (" + myId + ", " + id + ", '" + time + "')");
+                ctx.SaveChanges();
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
+        }
+
         public ActionResult MatchControl(int id)
         {
-            var myId = ThisUser();           
-            var ctx = new Gr8DbContext();
-
-            var viewmodel = new MatchControlViewModel
+            try
             {
-                Interests = ctx.Database.SqlQuery<string>("Select Name From Interests Where Id in (Select Interest From UserInterests Where UserId=" + myId + ") And Id in (Select Interest From UserInterests Where UserId=" + id + ")").ToList(),
-                OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault()
-            };   
-            
-            return View(viewmodel);
+                var myId = ThisUser();
+                var ctx = new Gr8DbContext();
+
+                var viewmodel = new MatchControlViewModel
+                {
+                    Interests = ctx.Database.SqlQuery<string>("Select Name From Interests Where Id in (Select Interest From UserInterests Where UserId=" + myId + ") And Id in (Select Interest From UserInterests Where UserId=" + id + ")").ToList(),
+                    OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault()
+                };
+
+                return View(viewmodel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
 
         }
 
-      
+
         public ActionResult MyFriends()
         {
-            var id = User.Identity.GetUserId();
-            var ctx = new Gr8DbContext();
-            var viewModel = new ProfileIndexViewModel
+            try
             {
-                Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) and Active = 'True'")
-                                                    .ToList(),
-                FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True'")
-                                                    .ToList()
+                var id = User.Identity.GetUserId();
+                var ctx = new Gr8DbContext();
+                var viewModel = new ProfileIndexViewModel
+                {
+                    Users = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select ToUser From FriendRequests Where FromUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) or Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'True')) and Active = 'True'")
+                                                        .ToList(),
+                    FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True'")
+                                                        .ToList()
 
-                                                    // denna kommentar vill man ha
-            };
-            return View(viewModel);
+                    // denna kommentar vill man ha
+                };
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult MatchSearch()
         {
-            
-            var MyId = ThisUser();
-            var ctx = new Gr8DbContext();
-            var viewmodel = new SeachBarViewModel
+            try
             {
-                User = ctx.Database.SqlQuery<User>("Select * From Users Where Id in (Select UserId From UserInterests Where Interest in (Select Interest From UserInterests Where UserId =" +  MyId + ")) And Id !=" +  MyId).ToList()
-            };
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                var viewmodel = new SeachBarViewModel
+                {
+                    User = ctx.Database.SqlQuery<User>("Select * From Users Where Id in (Select UserId From UserInterests Where Interest in (Select Interest From UserInterests Where UserId =" + MyId + ")) And Id !=" + MyId).ToList()
+                };
 
-            return View(viewmodel);
+                return View(viewmodel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
 
-        public  ActionResult SearchBar(string search)
+        public ActionResult SearchBar(string search)
         {
-            var MyId = ThisUser();
-            var ctx = new Gr8DbContext();
-            var lista = new SeachBarViewModel
+            try
             {
-                User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active==true && x.Id != MyId  || search == null && x.Active == true && x.Id != MyId).ToList()
-            };
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                var lista = new SeachBarViewModel
+                {
+                    User = ctx.Users.Where(x => x.FirstName.Contains(search) && x.Active == true && x.Id != MyId || search == null && x.Active == true && x.Id != MyId).ToList()
+                };
 
-            return View(lista);
+                return View(lista);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
-      
+
         public ActionResult ConfirmFriendRequest(int? id)
         {
+            try
+            {
+                var MyId = ThisUser();
 
-            var MyId = ThisUser();
-            
-            var ctx = new Gr8DbContext();
+                var ctx = new Gr8DbContext();
 
-           ctx.Database.ExecuteSqlCommand("Update FriendRequests Set Accepted = 'True' Where FromUser = '"+ id.ToString() + "' and ToUser = '" + MyId.ToString()+"'" );
+                ctx.Database.ExecuteSqlCommand("Update FriendRequests Set Accepted = 'True' Where FromUser = '" + id.ToString() + "' and ToUser = '" + MyId.ToString() + "'");
                 ctx.SaveChanges();
-            
-            return RedirectToAction("MyFriends", "Profile");
+
+                return RedirectToAction("MyFriends", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult DenyFriendRequest(int? id)
         {
+            try
+            {
+                var MyId = ThisUser();
 
-            var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
 
-            var ctx = new Gr8DbContext();
+                ctx.Database.ExecuteSqlCommand("delete from FriendRequests Where FromUser = '" + id.ToString() + "' and ToUser = '" + MyId.ToString() + "'");
+                ctx.SaveChanges();
 
-            ctx.Database.ExecuteSqlCommand("delete from FriendRequests Where FromUser = '" + id.ToString() + "' and ToUser = '" + MyId.ToString() + "'");
-            ctx.SaveChanges();
-
-            return RedirectToAction("MyFriends", "Profile");
+                return RedirectToAction("MyFriends", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult FriendRequest(int Id)
         {
-            int myId = ThisUser();
-            int friendId = Id;
-            var ctx = new Gr8DbContext();
-            int friends = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'True'").Sum();
-            int friendRequest = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'False'").Sum();
-
-            if (friends > 0)
+            try
             {
-                //meddela att ni redan är vänner
-                return RedirectToAction("MyFriends", "Profile");
+                int myId = ThisUser();
+                int friendId = Id;
+                var ctx = new Gr8DbContext();
+                int friends = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'True'").Sum();
+                int friendRequest = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'False'").Sum();
+
+                if (friends > 0)
+                {
+                    //meddela att ni redan är vänner
+                    return RedirectToAction("MyFriends", "Profile");
+                }
+
+                else if (friendRequest > 0)
+                {
+                    //meddela att det finns en vännförfrågan som inte är godkänd
+                    return RedirectToAction("MyFriends", "Profile");
+                }
+
+                else
+                {
+                    ctx.Database.ExecuteSqlCommand("Insert into FriendRequests values(" + myId + ", " + friendId + ", 'False') ");
+                    ctx.SaveChanges();
+                    return RedirectToAction("MyFriends", "Profile");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
             }
 
-            else if (friendRequest > 0)
-            {
-                //meddela att det finns en vännförfrågan som inte är godkänd
-                return RedirectToAction("MyFriends", "Profile");
-            }
-
-            else 
-            {
-                ctx.Database.ExecuteSqlCommand("Insert into FriendRequests values(" + myId + ", " + friendId + ", 'False') ");
-                ctx.SaveChanges();
-                return RedirectToAction("MyFriends", "Profile");
-            }
-         
         }
 
-        public ActionResult SaveAsXML() {
-            var id = ThisUser();
-            var ctx = new Gr8DbContext();
-            List<User> userList = new List<User>();
-            userList = ctx.Database.SqlQuery<User>("select * from Users where Id ="+id).ToList();
-
-
-
-            if (userList != null)
+        public ActionResult SaveAsXML()
+        {
+            try
             {
-                XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
-                TextWriter myWriter = new StreamWriter("~/Images/MyProfile.xml", true);
-                mySerializer.Serialize(myWriter, userList);
-                myWriter.Close();
+                var id = ThisUser();
+                var ctx = new Gr8DbContext();
+                List<User> userList = new List<User>();
+                userList = ctx.Database.SqlQuery<User>("select * from Users where Id =" + id).ToList();
 
+
+
+                if (userList != null)
+                {
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
+                    TextWriter myWriter = new StreamWriter("~/Images/MyProfile.xml", true);
+                    mySerializer.Serialize(myWriter, userList);
+                    myWriter.Close();
+
+                }
+
+                return RedirectToAction("MyProfile", "Profile");
             }
-
-            return RedirectToAction("MyProfile", "Profile");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
     }
 }
