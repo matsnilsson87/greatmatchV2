@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using gr8Match.Models;
-
-
+using System.Xml.Serialization;
+using System.IO;
 
 namespace gr8Match.Controllers
 {
@@ -347,7 +347,25 @@ namespace gr8Match.Controllers
          
         }
 
+        public ActionResult SaveAsXML() {
+            var id = ThisUser();
+            var ctx = new Gr8DbContext();
+            List<User> userList = new List<User>();
+            userList = ctx.Database.SqlQuery<User>("select * from Users where Id ="+id).ToList();
 
+
+
+            if (userList != null)
+            {
+                XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
+                TextWriter myWriter = new StreamWriter("~/Images/MyProfile.xml", true);
+                mySerializer.Serialize(myWriter, userList);
+                myWriter.Close();
+
+            }
+
+            return RedirectToAction("MyProfile", "Profile");
+        }
     }
 }
 
