@@ -16,6 +16,7 @@ namespace gr8Match.Models
         public string Title { get; set; }
 
         [DisplayName("Ladda upp profilbild")]
+        [Required(ErrorMessage = "Du måste välja en bild på din dator.")]
         public string ImgPath { get; set; }
 
         [NotMapped]

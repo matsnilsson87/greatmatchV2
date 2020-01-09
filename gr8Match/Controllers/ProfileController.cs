@@ -83,7 +83,7 @@ namespace gr8Match.Controllers
                 {
                     MyUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
 
-                    MyInterests = ctx.Database.SqlQuery<string>("elect Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                    MyInterests = ctx.Database.SqlQuery<string>("Select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
                     MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
                 };
                 return View(viewModel);
