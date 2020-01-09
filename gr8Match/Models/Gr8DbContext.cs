@@ -20,7 +20,7 @@ namespace gr8Match.Models
         public DbSet<Image> Images { get; set; }
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Visitor> Visitors { get; set; }
-
+        public DbSet<FriendInCategory> FriendInCategories { get; set; }
 
         public Gr8DbContext() : base("Gr8db")
         {

@@ -18,19 +18,20 @@
         {
             foreach (var friend in Model.Users)
             {
-                <tr>
-                    <td>
-                        @if (friend.ProfileImage == null)
-                        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+    <tr>
+        <td>
+            @if (friend.ProfileImage == null)
+            {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
-                        else
-                        {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
-                    </td>
-                    <td>@friend.FirstName </td>
-                    <td> @friend.LastName</td>
-                    <td> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
+            else
+            {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
+        </td>
+        <td>@friend.FirstName </td>
+        <td> @friend.LastName</td>
+        <td> @friend.LastName</td>
+        <td> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
 
-                </tr>
+    </tr>
             }
         }
     </table>
