@@ -501,56 +501,90 @@ namespace gr8Match.Controllers
 
         }
 
-        public static string GetCategory(int Id, string identityId) 
-        {    
-            int friendId = Id;
-            var ctx = new Gr8DbContext();
-            int myId = ctx.Database.SqlQuery<int>("Select Id from Users where identityId = '" + identityId + "'").FirstOrDefault();
-            string category = ctx.Database.SqlQuery<string>("Select CategoryName From Categories join FriendInCategories on Categories.Id = FriendInCategories.CategoryId join FriendRequests on FriendRequests.Id = FriendInCategories.FriendshipId where FriendRequests.FromUser = " + friendId + " or FriendRequests.ToUser = " + friendId + " and FriendInCategories.UserId = " + myId).FirstOrDefault();
-
-            if (category == null) 
+        public static string GetCategory(int Id, string identityId)
+        {
+            try
             {
-                category = "Kattegorilös och utan klös";
-            }
+                int friendId = Id;
+                var ctx = new Gr8DbContext();
+                int myId = ctx.Database.SqlQuery<int>("Select Id from Users where identityId = '" + identityId + "'").FirstOrDefault();
+                string category = ctx.Database.SqlQuery<string>("Select CategoryName From Categories join FriendInCategories on Categories.Id = FriendInCategories.CategoryId join FriendRequests on FriendRequests.Id = FriendInCategories.FriendshipId where FriendRequests.FromUser = " + friendId + " or FriendRequests.ToUser = " + friendId + " and FriendInCategories.UserId = " + myId).FirstOrDefault();
 
-            return category;
+                if (category == null)
+                {
+                    category = "Kattegorilös och utan klös";
+                }
+
+                return category;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "";
+            }
         }
 
         public ActionResult AddCategory(int Id)
         {
-            var ctx = new Gr8DbContext();
-            var viewModel = new CategoryViewModel()
+            try
             {
-                FriendId = Id,
-                CategoryList = ctx.Database.SqlQuery<Category>("Select * from categories").ToList()
-        };
+                var ctx = new Gr8DbContext();
+                var viewModel = new CategoryViewModel()
+                {
+                    FriendId = Id,
+                    CategoryList = ctx.Database.SqlQuery<Category>("Select * from categories").ToList()
+                };
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
-        public ActionResult AddCategories(int Id, int friendId) 
+        public ActionResult AddCategories(int Id, int friendId)
         {
-            var categoryId = Id;
-            var ctx = new Gr8DbContext();
-            var myId = ThisUser();
-            int friendshipId = ctx.Database.SqlQuery<int>("Select Id from FriendRequests where FromUser = " + myId + " and ToUser = " + friendId + " or FromUser = " + friendId + " and ToUser = " + myId).FirstOrDefault();
-            ctx.Database.ExecuteSqlCommand("Insert into FriendInCategories Values(" + friendshipId + ", " + myId + ", " + categoryId + ")");
-            return RedirectToAction("MyFriends", "Profile");
+            try
+            {
+                var categoryId = Id;
+                var ctx = new Gr8DbContext();
+                var myId = ThisUser();
+                int friendshipId = ctx.Database.SqlQuery<int>("Select Id from FriendRequests where FromUser = " + myId + " and ToUser = " + friendId + " or FromUser = " + friendId + " and ToUser = " + myId).FirstOrDefault();
+                ctx.Database.ExecuteSqlCommand("Insert into FriendInCategories Values(" + friendshipId + ", " + myId + ", " + categoryId + ")");
+                return RedirectToAction("MyFriends", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
-        public ActionResult RemoveCategory(int Id) 
+        public ActionResult RemoveCategory(int Id)
         {
-            int myId = ThisUser();
-            int friendId = Id;
-            var ctx = new Gr8DbContext();
-            ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
+            try
+            {
+                int myId = ThisUser();
+                int friendId = Id;
+                var ctx = new Gr8DbContext();
+                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
 
-            return RedirectToAction("MyFriends", "Profile");
+                return RedirectToAction("MyFriends", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
         }
 
         public ActionResult SaveAsXML()
         {
-            
+            try
+            {
+
                 var id = ThisUser();
                 var ctx = new Gr8DbContext();
                 List<User> userList = new List<User>();
@@ -562,14 +596,20 @@ namespace gr8Match.Controllers
                 {
                     var path = Server.MapPath(@"~/Images/MyProfile.xml");
                     XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
-                    TextWriter myWriter = new StreamWriter(path , true);
+                    TextWriter myWriter = new StreamWriter(path, true);
                     mySerializer.Serialize(myWriter, userList);
                     myWriter.Close();
 
                 }
 
                 return RedirectToAction("MyProfile", "Profile");
-          }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
+        }
     }
 }
 

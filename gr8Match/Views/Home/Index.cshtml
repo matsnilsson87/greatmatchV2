@@ -78,10 +78,8 @@ else
     @foreach (var item in Model.Profiles)
     {
         <div class="col-md-2">
-            <div class="catBox">
+            <div class="catBox2">
 
-                <br />
-                <br />
                 <h3>
                     @if (item.ProfileImage == null)
                     {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
@@ -89,7 +87,7 @@ else
                     else
                     {<img src="@Url.Content(item.ProfileImage)" width="150" height="150" />}
                 </h3>
-                <br />
+          
                 <br />
                 <h5>@item.FirstName @item.LastName</h5>
                 <p>

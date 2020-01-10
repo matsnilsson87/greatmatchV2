@@ -48,12 +48,12 @@ namespace gr8Match.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Du måste fylla i en mailadress")]
         [Display(Name = "Mailadress")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Du måste fylla i ett lösenord")]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
@@ -64,20 +64,20 @@ namespace gr8Match.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Du måste fylla i en mailadress")]
         [EmailAddress]
         [Display(Name = "Mailadress")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Du måste fylla i ett lösenord")]
+        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Upprepa Lösenord")]
-        [Compare("Password", ErrorMessage = "De angivna lösenorden matchar inte.")]
+        [Compare("Password", ErrorMessage = "De angivna lösenorden matchar inte")]
         public string ConfirmPassword { get; set; }
     }
 

@@ -14,16 +14,17 @@ namespace gr8Match.Models
         public int Id { get; set; }
 
         [Display(Name = "Förnamn")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
-        [Required(ErrorMessage = "Du måste fylla i ett förnamn.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Du kan bara använda bokstäver")]
+        [Required(ErrorMessage = "Du måste fylla i ett förnamn")]
         public string FirstName { get; set; }
 
         [Display(Name = "Efternamn")]
-        [Required(ErrorMessage = "Du måste fylla i ett efternamn.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Du kan bara använda bokstäver")]
+        [Required(ErrorMessage = "Du måste fylla i ett efternamn")]
         public string LastName { get; set; }
 
         [Display(Name = "Födelsedatum")]
-        [Required(ErrorMessage = "Du måste fylla i ett födelsedatum.")]
+        [Required(ErrorMessage = "Du måste fylla i ett födelsedatum")]
         [Column(TypeName = "date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateOfBirth { get; set; }

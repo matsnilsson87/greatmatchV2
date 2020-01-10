@@ -27,34 +27,34 @@ namespace gr8Match.Models
 
     public class SetPasswordViewModel
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Du måste fylla i ett lösenord")]
+        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nytt lösenord")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Upprepa lösenord")]
-        [Compare("NewPassword", ErrorMessage = "De angivna lösenorden matchar inte.")]
+        [Compare("NewPassword", ErrorMessage = "De angivna lösenorden matchar inte")]
         public string ConfirmPassword { get; set; }
     }
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Du måste fylla i ditt nuvarande lösenord")]
         [DataType(DataType.Password)]
-        [Display(Name = "Befintligt lösenord")]
+        [Display(Name = "Nuvarande lösenord")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Du måste fylla i ett nytt lösenord")]
+        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nytt Lösenord")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Upprepa lösenord")]
-        [Compare("NewPassword", ErrorMessage = "De angivna lösenorden matchar inte.")]
+        [Compare("NewPassword", ErrorMessage = "De angivna lösenorden matchar inte")]
         public string ConfirmPassword { get; set; }
     }
 
