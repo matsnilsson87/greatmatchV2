@@ -550,8 +550,7 @@ namespace gr8Match.Controllers
 
         public ActionResult SaveAsXML()
         {
-            try
-            {
+            
                 var id = ThisUser();
                 var ctx = new Gr8DbContext();
                 List<User> userList = new List<User>();
@@ -561,21 +560,16 @@ namespace gr8Match.Controllers
 
                 if (userList != null)
                 {
+                    var path = Server.MapPath(@"~/Images/MyProfile.xml");
                     XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
-                    TextWriter myWriter = new StreamWriter("~/Images/MyProfile.xml", true);
+                    TextWriter myWriter = new StreamWriter(path , true);
                     mySerializer.Serialize(myWriter, userList);
                     myWriter.Close();
 
                 }
 
                 return RedirectToAction("MyProfile", "Profile");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return View("Error");
-            }
-        }
+          }
     }
 }
 

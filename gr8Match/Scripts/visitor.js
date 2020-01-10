@@ -12,7 +12,7 @@
                         $('.visitor')
                         .append(
                             `<div class="message">
-                                <h4>${user.FirstName}  ${user.LastName}</h4>
+                                <p>${user.FirstName}  ${user.LastName}</p>
                                 </div>`
                            
                         );

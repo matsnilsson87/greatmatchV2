@@ -1,85 +1,67 @@
 ﻿@model gr8Match.Models.MyProfileViewModel
 
-
-
-
 @{
     ViewBag.Title = "Min profil";
-
-
 }
 
-    <script src="~/Scripts/ConfirmDelete.js"></script>
-
-    <div>
+<script src="~/Scripts/ConfirmDelete.js"></script>
+<div class="row">
+    <div class="col-md-3">
         @if (Model.MyUser.ProfileImage == null)
         {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
         else
         {<img src="@Url.Content(Model.MyUser.ProfileImage)" width="150" height="150" />}
-
-        @Html.ActionLink("Byt profilbil", "Index", "Image")
-        @Html.ActionLink("Ändra profil", "EditProfile", "Profile", new { id = Model.MyUser.Id }, null)
-        @if (Model.MyUser.Active == true)
-        {
-            @Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")
-        }
-        else
-        {
-            @Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")
-        }
-        @Html.ActionLink("Ladda ner profil som XML", "SaveAsXML", "Profile")
     </div>
-
-<div>
-    <table class="table">
-
-        <tr>
-            <td>
-                @Model.MyUser.FirstName
-
-            </td>
-            <td>
-                @Model.MyUser.LastName
-            </td>
-            <td>
-                @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
-                @age år
-            </td>
-
-        </tr>
-
-    </table>
-</div>
-<div>
-    <hr />
-    <h3>Mina senaste besök</h3>
-    <div class="visitor">
-        <input type="hidden" id="myId" value=@Model.MyUser.Id />
-
+    <div class="col-md-6">
+        <h2>@Model.MyUser.FirstName @Model.MyUser.LastName</h2>
+        @{int age = new DateTime(DateTime.Now.Subtract(Model.MyUser.DateOfBirth).Ticks).Year - 1;}
+        <h5>@age år</h5>
     </div>
-    
+    <div class="col-md-3">
+        <ul>
+            <li>@Html.ActionLink("Byt profilbil", "Index", "Image")</li>
+            <li>@Html.ActionLink("Ändra profil", "EditProfile", "Profile", new { id = Model.MyUser.Id }, null)</li>
+            @if (Model.MyUser.Active == true)
+            {
+                <li>@Html.ActionLink("Inaktivera konto", "InactivateAccount", "Profile")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")</li>
+            }
+            <li>@Html.ActionLink("Ladda ner profil som XML", "SaveAsXML", "Profile")</li>
+        </ul>
+    </div>
 </div>
-<div>
-
-    Mina Intressen  @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
-
-    <table class="table">
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <h3>Mina senaste besök</h3>
+        <div class="visitor">
+            <input type="hidden" id="myId" value=@Model.MyUser.Id />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Mina Intressen</h3>
 
         @foreach (var i in Model.MyInterests)
         {
-            <tr>
-                <td>
-                    @i
-                </td>
-
-            </tr>
+            <h5> @i </h5>
         }
-    </table>
-</div>
 
+        <br />
+        <p>
+            @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") 
+        </p>
+        <p>
+            @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
+        </p>
+    </div>
+</div>
+<hr />
 <div>
-    Mina Meddelande
+    <h3>Mina Meddelande</h3>
 
     <table class="table">
 

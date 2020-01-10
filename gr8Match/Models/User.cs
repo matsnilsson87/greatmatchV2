@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace gr8Match.Models
 {
@@ -34,26 +35,35 @@ namespace gr8Match.Models
         public string IdentityID { get; set; }
 
         [InverseProperty("User1")]
+        [XmlIgnore]
         public ICollection<Visitor> Visitors1 { get; set; }
+
         [InverseProperty("User2")]
+        [XmlIgnore]
         public ICollection<Visitor> Visitors2 { get; set; }
 
         [InverseProperty("User1")]
+        [XmlIgnore]
         public ICollection<FriendRequest> Requests1 { get; set; }
         [InverseProperty("User2")]
+        [XmlIgnore]
         public ICollection<FriendRequest> Requests2 { get; set; }
 
         [InverseProperty("User1")]
+        [XmlIgnore]
         public ICollection<Posts> Posts1 { get; set; }
         [InverseProperty("User2")]
+        [XmlIgnore]
         public ICollection<Posts> Posts2 { get; set; }
 
         [InverseProperty("User1")]
+        [XmlIgnore]
         public ICollection<Image> Images { get; set; }
 
         [InverseProperty("User")]
+        [XmlIgnore]
         public ICollection<FriendInCategory> FriendCategories { get; set; }
-
+        [XmlIgnore]
         public ICollection<UserInterests> UserInterests { get; set; }
     }
 }
