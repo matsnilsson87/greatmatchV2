@@ -34,6 +34,7 @@
                 @{int age = new DateTime(DateTime.Now.Subtract(Model.OtherUser.DateOfBirth).Ticks).Year - 1;}
                 @age år
             </td>
+            
             <td>
                 @Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)
             </td>
