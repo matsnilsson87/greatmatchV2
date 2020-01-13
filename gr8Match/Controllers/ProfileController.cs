@@ -299,7 +299,7 @@ namespace gr8Match.Controllers
                 var MyId = ThisUser();
 
                 var ctx = new Gr8DbContext();
-                string intresse = Request["Name"];
+                string intresse = Request["Interest.Name"];
 
                 ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=(Select Id From Interests where Name='" + intresse + "')");
                 ctx.SaveChanges();
