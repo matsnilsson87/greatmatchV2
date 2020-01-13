@@ -10,12 +10,12 @@
     <div>      
             @if (Model.Interests.Count == 0)
             {
-                <p>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName kanske inte passar så bra ihop eftersom ni inte delar några gemensamma intressen</p>
+                <h4>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName kanske inte passar så bra ihop eftersom ni inte delar några gemensamma intressen</h4>
             }
 
             else
             {
-              <p>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName skulle passa bra ihop eftersom ni delar dessa intressen tillsammans:</p>
+              <h4>Du och @Model.OtherUser.FirstName @Model.OtherUser.LastName skulle passa bra ihop eftersom ni delar dessa intressen tillsammans:</h4>
 
                 foreach (var i in Model.Interests)
                 {
