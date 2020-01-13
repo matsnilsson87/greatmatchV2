@@ -48,7 +48,7 @@ namespace gr8Match.WebApi
 
             }
             catch {
-                return "Opps, något gick fel ring rudde!";
+                return "Något gick fel!";
              
             }
         

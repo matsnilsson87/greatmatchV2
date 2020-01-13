@@ -63,16 +63,13 @@ namespace gr8Match.Controllers
 
                 image.ImageFile.SaveAs(fileName);
 
+                    var ctx = new Gr8DbContext();
+                    ctx.Images.Add(image);
+                    ctx.Database.ExecuteSqlCommand("Update Users Set ProfileImage = '" + image.ImgPath + "' where Id = '" + thisId.ToString() + "'");
 
-
-                var ctx = new Gr8DbContext();
-                ctx.Images.Add(image);
-                ctx.Database.ExecuteSqlCommand("Update Users Set ProfileImage = '" + image.ImgPath + "' where Id = '" + thisId.ToString() + "'");
-
-                ctx.SaveChanges();
-
-
-                return RedirectToAction("MyProfile", "Profile");
+                    ctx.SaveChanges();
+                    return RedirectToAction("MyProfile", "Profile");
+                
             }
             catch (Exception e)
             {
