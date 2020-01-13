@@ -367,7 +367,7 @@ namespace gr8Match.Controllers
                     FriendControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'True'").Sum(),
                     FriendRequestControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'False'").Sum()
 
-            };
+                };
                 ctx.Database.ExecuteSqlCommand("Insert into Visitors Values (" + myId + ", " + id + ", '" + time + "')");
                 ctx.SaveChanges();
                 return View(viewModel);
@@ -614,7 +614,7 @@ namespace gr8Match.Controllers
                 int myId = ThisUser();
                 int friendId = Id;
                 var ctx = new Gr8DbContext();
-                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
+                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId in (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
 
                 return RedirectToAction("MyFriends", "Profile");
             }
