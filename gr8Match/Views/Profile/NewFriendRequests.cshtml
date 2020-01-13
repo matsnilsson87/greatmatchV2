@@ -1,37 +1,40 @@
 ﻿@using gr8Match.Models
 @model ProfileIndexViewModel
 
-    <table class="table">
+    <div class="row">
         <h2>Nya vänförfrågningar:</h2>
 
-            @if (Model.FriendsRequests.Count == 0)
+        @if (Model.FriendsRequests.Count == 0)
+        {
+            <h5>Du är opopulär!</h5>
+        }
+        else
+        {
+            foreach (var friend in Model.FriendsRequests)
             {
-                <tr>
-                    <td>Du är opopulär!</td>
-                </tr>
+                <hr />
+    <div class="col-md-2">
+        @if (friend.ProfileImage == null)
+        {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
+        else
+        {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
+    </div>
+    <div class="col-md-8">
+        <h3>@friend.FirstName @friend.LastName</h3>
+
+        <p>Ålder: @{int age = new DateTime(DateTime.Now.Subtract(friend.DateOfBirth).Ticks).Year - 1;}
+            @age
+        </p>
+    </div>
+                <div class="col-md-2">
+                    <br />
+                    <p>@Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>
+
+                    <p>@Html.ActionLink("Acceptera förfrågan", "ConfirmFriendRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>
+
+                    <p>@Html.ActionLink("Avböj förfrågan", "DenyFriendRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>
+                </div>
             }
-            else
-            { 
-                foreach (var friend in Model.FriendsRequests)
-                {
-    <tr>
-        <td>
-            @if (friend.ProfileImage == null)
-            {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
-            else
-            {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
-        </td>
-        <td>@friend.FirstName</td>
-       
-        <td>@friend.LastName</td>
-        
-        <td>@Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
-        
-        <td>@Html.ActionLink("Acceptera förfrågan", "ConfirmFriendRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
-       
-        <td>@Html.ActionLink("Avböj förfrågan", "DenyFriendRequest", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</td>
-    </tr>
-                }
-            }
-    </table>
+        }
+    </div>
 <hr />
