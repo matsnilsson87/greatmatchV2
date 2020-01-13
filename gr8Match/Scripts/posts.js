@@ -12,7 +12,7 @@ function getName() {
 
 
 function updateMessageList() {
-    // Hämta användarid från den dolda input-taggen:
+
     const id = $('#user-id').val();
     var userId = parseInt(id, 10);
 
@@ -24,7 +24,8 @@ function updateMessageList() {
 
                     $('#messagelist')
                         .append(
-                            `<hr />
+                            `<div class="toRemove">
+                            <hr />
                             <div class="row">
                                 <div class="col-md-12">
                                     <h6>Skrivet av användare:  ${post.WrittenBy}, ${post.Datum} </h6>                                                      
@@ -34,6 +35,7 @@ function updateMessageList() {
                                 <div class="col-md-12">                                          
                                     <p>${post.Text}</p>
                                 </div>
+                            </div>
                             </div>`
                         );
                 });
@@ -58,7 +60,7 @@ function sendMessage() {
             .then((resp) => {
                 if (resp === "Meddelandet skickat") {
                     $('#new-message').val('');
-                    $('.message').remove();
+                    $('.toRemove').remove();
                     updateMessageList();
                 } else {
                     alert('Något gick fel!');

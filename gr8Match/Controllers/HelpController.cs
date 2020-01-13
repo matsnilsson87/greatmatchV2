@@ -11,6 +11,7 @@ namespace gr8Match.Controllers
     public class HelpController : Controller
     {
        
+        //Räknar alla friendrequests för att kunna visa dom på startsidan.
         public static int CountFriendRequests(String _id)
         {
             try
@@ -28,6 +29,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Hämtar ID på den som är inloggad.
         public static int ThisUser(string _id)
         {
 
