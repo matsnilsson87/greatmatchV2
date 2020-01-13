@@ -7,19 +7,17 @@
 
 
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Passande Partners med samma intressen som dig:</th>
-        </tr>
-    </thead>
+
+    <h4>Passande Partners med samma intressen som dig:</h4>
+
     <tbody>
 
-        
+
         @if (Model.User.Count() == 0)
         {
             <tr>
                 <td>
-                    <h6>Du har inga passande partners just nu. Ge inte upp!</h6>
+                    <h4>Du har inga passande partners just nu. Ge inte upp!</h4>
                 </td>
             </tr>
         }

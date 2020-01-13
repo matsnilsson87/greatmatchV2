@@ -7,17 +7,14 @@
     <div>
         @using (Html.BeginForm("SearchBar", "Profile", FormMethod.Get))
         {
+            <h4>Sök efter en användare:</h4>
             @Html.TextBox("search")
             <input type="submit" value="Sök" />
         }
     </div>
 
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Profil</th>
-        </tr>
-    </thead>
+    <h5>Alla användare:</h5>
     <tbody>
 
         @foreach (var item in Model.User)

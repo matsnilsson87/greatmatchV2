@@ -12,12 +12,9 @@ using System.Diagnostics;
 namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
-    {
-        private FileMode Open;
-
-
-        // GET: User
-        public ActionResult Index()
+    {        
+        [HttpGet]
+        public ActionResult AddUser()
         {
             try
             {
@@ -49,6 +46,8 @@ namespace gr8Match.Controllers
             }
 
         }
+        
+        //Hämtar ID på den användare som är inloggad.
         public int ThisUser()
         {
             try
@@ -185,6 +184,8 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Lägger till intresset i databasen, en kontroll finns som kollar om intresset som skrivs in redan finns,
+        //isf ska den bara läggas till med ID på användaren.
         [HttpPost]
         public ActionResult AddInterests(FormCollection profil)
         {
@@ -227,6 +228,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Lägger till intresset som man väljer från listan med redan befintliga intressen.
         public ActionResult AddInterestFromList(int Id)
         {
             try
