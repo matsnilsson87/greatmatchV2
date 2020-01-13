@@ -192,7 +192,7 @@ namespace gr8Match.Controllers
             {
                 var MyId = ThisUser();
                 var ctx = new Gr8DbContext();
-                string intresse = Request["Name"];
+                string intresse = Request["Interest.Name"];
                 var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
                 bool boolean = true;
                 foreach (var namn in lista1)
@@ -269,17 +269,20 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Fyller listan med användarens intressen.
         [HttpGet]
         public ActionResult DeleteInterest()
         {
             try
             {
-                using (Gr8DbContext gr8Db = new Gr8DbContext())
-                {
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                var viewModel = new InterestsViewModel()
+                {                   
+                    InterestsList = ctx.Database.SqlQuery<Interests>("Select * from Interests Where Id in(Select Interest From UserInterests Where UserId=" + MyId + ")").ToList()
+                };
 
-                    return View();
-
-                }
+                return View(viewModel);
             }
             catch (Exception e)
             {
@@ -299,6 +302,26 @@ namespace gr8Match.Controllers
                 string intresse = Request["Name"];
 
                 ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=(Select Id From Interests where Name='" + intresse + "')");
+                ctx.SaveChanges();
+
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
+        }
+
+        //Ta bort det valda intresset från listan.
+        public ActionResult DeleteInterestFromList(int Id)
+        {
+            try
+            {
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                ctx.Database.ExecuteSqlCommand("Delete From UserInterests Where UserId=" + MyId + " And Interest=" + Id);
+                
                 ctx.SaveChanges();
 
                 return RedirectToAction("MyProfile", "Profile");
