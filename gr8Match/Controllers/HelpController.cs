@@ -47,7 +47,22 @@ namespace gr8Match.Controllers
             }
             return 0;
         }
+        public static string WhoWroteTheMessage(int Id)
+        {
+            try
+            {
+                int friendId = Id;
+                var ctx = new Gr8DbContext();
+                string name = ctx.Database.SqlQuery<string>("select firstname + ' ' + lastname from users where id = " + friendId).FirstOrDefault();
 
+                return name;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "Okänd avsändare";
+            }
+        }
 
     }
 }

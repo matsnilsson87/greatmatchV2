@@ -1,4 +1,5 @@
 ﻿@model gr8Match.Models.MyProfileViewModel
+@using gr8Match.Controllers
 
 @{
     ViewBag.Title = "Min profil";
@@ -35,17 +36,17 @@
         </ul>
     </div>
 </div>
-<hr />
 <div class="row">
     <div class="col-md-6">
         <h3>Mina senaste besök</h3>
+        <hr />
         <div class="visitor">
             <input type="hidden" id="myId" value=@Model.MyUser.Id />
         </div>
     </div>
     <div class="col-md-6">
         <h3>Mina Intressen</h3>
-
+        <hr />
         @foreach (var i in Model.MyInterests)
         {
             <h5> @i </h5>
@@ -53,44 +54,40 @@
 
         <br />
         <p>
-            @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile") 
+            @Html.ActionLink("Lägg till intressen", "AddInterests", "Profile")
         </p>
         <p>
             @Html.ActionLink("Ta bort intressen", "DeleteInterest", "Profile")
         </p>
     </div>
 </div>
-<hr />
 <div>
     <h3>Mina Meddelande</h3>
 
-    <table class="table">
-
-        @foreach (var p in Model.MyPosts)
-        {
-            <tr>
-                <td>
-                    @p.Text
-                </td>
-                <td>
-                    @p.WrittenBy
-                </td>
-                <td>
-                    <input type="button" id="btnpopu" value="Ta bort inlägg" onclick="showModal();" />
-                    <div id="confirmModal" class="modal">
-                        <div class="modal-content">
-                            <p>Vill du verkligen ta bort detta inlägget?</p>
-                            @Html.ActionLink("Ta bort", "DeletePost", "Profile", routeValues: new { p.Id }, htmlAttributes: null)
-                            @Html.ActionLink("Ångra", "MyProfile", "Profile")
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-
-        }
-    </table>
-
+    @foreach (var p in Model.MyPosts)
+    { int id = p.WrittenBy; 
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <p>Skrivet av @Html.ActionLink(@HelpController.WhoWroteTheMessage(p.WrittenBy), "OtherProfile", "Profile", routeValues: new { id }, htmlAttributes: null) den @p.Datum</p>
+        </div>
+        <div class="col-md-4">
+            <input type="button" class="btn btn-default" id="btnpopu" value="Ta bort inlägg" onclick="showModal();" />
+            <div id="confirmModal" class="modal">
+                <div class="modal-content">
+                    <p>Vill du verkligen ta bort detta inlägget?</p>
+                    @Html.ActionLink("Ta bort", "DeletePost", "Profile", routeValues: new { p.Id }, htmlAttributes: null)
+                    @Html.ActionLink("Ångra", "MyProfile", "Profile")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @p.Text
+        </div>
+    </div>
+    }
 </div>
 
 <script src="~/Scripts/visitor.js"></script>
