@@ -198,6 +198,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Interests.cs" />
+    <Compile Include="Models\InterestsViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MatchControlViewModel.cs" />
     <Compile Include="Models\MyProfileViewModel.cs" />

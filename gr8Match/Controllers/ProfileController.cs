@@ -166,12 +166,14 @@ namespace gr8Match.Controllers
         {
             try
             {
-                using (Gr8DbContext gr8Db = new Gr8DbContext())
+                var ctx = new Gr8DbContext();
+                var viewModel = new InterestsViewModel()
                 {
+                    Interest = new Interests(),
+                    InterestsList = ctx.Database.SqlQuery<Interests>("Select * from Interests").ToList()
+                };
 
-                    return View();
-
-                }
+                return View(viewModel);
             }
             catch (Exception e)
             {
@@ -188,6 +190,47 @@ namespace gr8Match.Controllers
                 var MyId = ThisUser();
                 var ctx = new Gr8DbContext();
                 string intresse = Request["Name"];
+                var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
+                bool boolean = true;
+                foreach (var namn in lista1)
+                {
+                    if (intresse.Equals(namn))
+                    {
+                        boolean = false;
+
+                    }
+
+                }
+
+                if (boolean)
+                {
+                    ctx.Database.ExecuteSqlCommand("Insert into Interests Values('" + intresse + "')");
+                    ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+                }
+
+                else
+                {
+                    ctx.Database.ExecuteSqlCommand("Insert into UserInterests Values(" + MyId + ", (Select Id From Interests Where Name='" + intresse + "'))");
+                }
+
+                ctx.SaveChanges();
+
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View("Error");
+            }
+        }
+
+        public ActionResult AddInterestFromList(int Id)
+        {
+            try
+            {
+                var MyId = ThisUser();
+                var ctx = new Gr8DbContext();
+                var intresse = ctx.Database.SqlQuery<string>("Select Name From Interests Where Id ='" + Id.ToString() + "'").FirstOrDefault();
                 var lista1 = ctx.Database.SqlQuery<string>("Select Name From Interests").ToList();
                 bool boolean = true;
                 foreach (var namn in lista1)
