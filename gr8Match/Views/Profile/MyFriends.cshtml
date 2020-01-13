@@ -8,42 +8,47 @@
 
 @Html.Partial("NewFriendRequests")
 
-<div class="row">
-    <h2>Här är dina vänner:</h2>
-    @if (Model.Users.Count == 0)
-    {
+<h2>Här är dina vänner:</h2>
+
+@if (Model.Users.Count == 0)
+{
+    <div class="row">
         <h5>Du har ju inga vänner :,(</h5>
-        
-    }
-    else
+    </div>
+}
+else
+{
+    foreach (var friend in Model.Users)
     {
-        foreach (var friend in Model.Users)
-        {
-            var Category = @ProfileController.GetCategory(friend.Id, User.Identity.GetUserId());
+        var Category = @ProfileController.GetCategory(friend.Id, User.Identity.GetUserId());
+
+        <div class="row">
             <hr />
-                <div class="col-md-2">
-                    @if (friend.ProfileImage == null)
-                    {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
-                    else
-                    {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
-                </div>
+            <div class="col-md-2">
+                @if (friend.ProfileImage == null)
+                {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
-                <div class="col-md-8">
-                    <h2>@friend.FirstName @friend.LastName</h2>
-                    <p> @Category </p>
-                </div>
-
-                <div class="col-md-2">
-                    <br />
-                    @if (@Category == "Kattegorilös och utan klös")
-                    {<p> @Html.ActionLink("Lägg till kattegori", "AddCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>}
                 else
-                {<p> @Html.ActionLink("Ta bort kattegori", "RemoveCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>}
+                {<img src="@Url.Content(friend.ProfileImage)" width="150" height="150" />}
+            </div>
 
-                    <p> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>
-                </div>
-        }
+            <div class="col-md-8">
+                <h2>@friend.FirstName @friend.LastName</h2>
+                <p> @Category </p>
+            </div>
+
+            <div class="col-md-2">
+                <br />
+                @if (@Category == "Kattegorilös och utan klös")
+                {<p> @Html.ActionLink("Lägg till kattegori", "AddCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>}
+            else
+            {<p> @Html.ActionLink("Ta bort kattegori", "RemoveCategory", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>}
+
+                <p> @Html.ActionLink("Visa Profil", "OtherProfile", "Profile", routeValues: new { friend.Id }, htmlAttributes: null)</p>
+            </div>
+        </div>
     }
-</div>
+}
+
 

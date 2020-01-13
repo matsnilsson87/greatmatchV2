@@ -6,11 +6,14 @@ using Microsoft.AspNet.Identity;
 using gr8Match.Models;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Diagnostics;
 
 namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
     {
+        private FileMode Open;
 
 
         // GET: User
@@ -363,7 +366,9 @@ namespace gr8Match.Controllers
                 var viewModel = new OtherProfileViewModel
                 {
                     OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-                    OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
+                    OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                    FriendControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'True'").Sum(),
+                    FriendRequestControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'False'").Sum()
 
                 };
                 ctx.Database.ExecuteSqlCommand("Insert into Visitors Values (" + myId + ", " + id + ", '" + time + "')");
@@ -612,7 +617,7 @@ namespace gr8Match.Controllers
                 int myId = ThisUser();
                 int friendId = Id;
                 var ctx = new Gr8DbContext();
-                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
+                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId in (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
 
                 return RedirectToAction("MyFriends", "Profile");
             }
@@ -632,16 +637,21 @@ namespace gr8Match.Controllers
                 var ctx = new Gr8DbContext();
                 List<User> userList = new List<User>();
                 userList = ctx.Database.SqlQuery<User>("select * from Users where Id =" + id).ToList();
-
-
+                string downloadsPath = KnownFolders.Downloads.Path;
+                Debug.WriteLine(downloadsPath);
+               
 
                 if (userList != null)
                 {
+                    
                     var path = Server.MapPath(@"~/Images/MyProfile.xml");
                     XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
                     TextWriter myWriter = new StreamWriter(path, true);
                     mySerializer.Serialize(myWriter, userList);
+
+             
                     myWriter.Close();
+                    saveLocal();
 
                 }
 
@@ -652,7 +662,19 @@ namespace gr8Match.Controllers
                 Console.WriteLine(e.Message);
                 return View("Error");
             }
+
+        }
+
+        public void saveLocal() {
+            var date = DateTime.Now;
+            string filename = "MyProfile.xml";
+            string filesource = Server.MapPath("~/Images/") + filename; // server file "KT_page.xml" available in server directory "files"
+            FileInfo fi1 = new FileInfo(filesource);
+            string filedest = KnownFolders.Downloads.Path + "/MyCatProfile.xml";
+            fi1.CopyTo(filedest,true);
+
         }
     }
+
 }
 
