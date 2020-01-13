@@ -32,7 +32,7 @@
             {
                 <li>@Html.ActionLink("Aktivera konto", "ActivateAccount", "Profile")</li>
             }
-            <li>@Html.ActionLink("Ladda ner profil som XML", "SaveAsXML", "Profile")</li>
+            <li>@Html.ActionLink("Ladda ner profil som XML", "SaveAsXML", "Profile", new { onclick = "return alert('Du har nu laddat ner en XML-fil med din profil');" })</li>
         </ul>
     </div>
 </div>
