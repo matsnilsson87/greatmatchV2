@@ -24,7 +24,7 @@ namespace gr8Match.WebApi
             
                 
             var view = new List<Posts>();
-            view = ctx.Posts.Where(i => i.WrittenTo == id).OrderBy(d => d.Datum).ToList();
+            view = ctx.Posts.Where(i => i.WrittenTo == id).OrderByDescending(d => d.Datum).ToList();
                  
             return view;
         }
