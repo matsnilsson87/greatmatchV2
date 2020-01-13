@@ -26,6 +26,7 @@ namespace gr8Match.Models
         [Display(Name = "Födelsedatum")]
         [Required(ErrorMessage = "Du måste fylla i ett födelsedatum")]
         [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateOfBirth { get; set; }
 
