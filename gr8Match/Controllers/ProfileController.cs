@@ -369,7 +369,7 @@ namespace gr8Match.Controllers
                     FriendControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'True'").Sum(),
                     FriendRequestControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'False'").Sum()
 
-            };
+                };
                 ctx.Database.ExecuteSqlCommand("Insert into Visitors Values (" + myId + ", " + id + ", '" + time + "')");
                 ctx.SaveChanges();
                 return View(viewModel);
@@ -615,7 +615,7 @@ namespace gr8Match.Controllers
                 int myId = ThisUser();
                 int friendId = Id;
                 var ctx = new Gr8DbContext();
-                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId = (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
+                ctx.Database.ExecuteSqlCommand("delete from FriendInCategories where userid = " + myId + " and FriendshipId in (Select id from FriendRequests where fromuser = " + friendId + " or touser = " + friendId + ")");
 
                 return RedirectToAction("MyFriends", "Profile");
             }
@@ -664,11 +664,12 @@ namespace gr8Match.Controllers
         }
 
         public void saveLocal() {
+            var date = DateTime.Now;
             string filename = "MyProfile.xml";
             string filesource = Server.MapPath("~/Images/") + filename; // server file "KT_page.xml" available in server directory "files"
             FileInfo fi1 = new FileInfo(filesource);
             string filedest = KnownFolders.Downloads.Path + "/MyCatProfile.xml";
-            fi1.CopyTo(filedest);
+            fi1.CopyTo(filedest,true);
 
         }
     }
