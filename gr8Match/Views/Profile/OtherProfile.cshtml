@@ -5,64 +5,45 @@
 @{
     ViewBag.Title = Model.OtherUser.FirstName + " Profil";
     ViewBag.Id = Model.OtherUser.Id;
-    ViewBag.MyId = HelpController.ThisUser(User.Identity.GetUserId()); 
+    ViewBag.MyId = HelpController.ThisUser(User.Identity.GetUserId());
 
 }
 
-
-    <div>
+<div class="row">
+    <div class="col-md-3">
         @if (Model.OtherUser.ProfileImage == null)
         {<img src="~/Images/defaultImg.jpg" width="150" height="150" />}
 
         else
         {<img src="@Url.Content(Model.OtherUser.ProfileImage)" width="150" height="150" />}
-       
     </div>
 
-<div>
-    <table class="table">
+    <div class="col-md-6">
+        <h2>@Model.OtherUser.FirstName @Model.OtherUser.LastName</h2>
+        @{int age = new DateTime(DateTime.Now.Subtract(Model.OtherUser.DateOfBirth).Ticks).Year - 1;}
+        <h5>@age år</h5>
+    </div>
 
-        <tr>
-            <td>
-                @Model.OtherUser.FirstName
-
-            </td>
-            <td>
-                @Model.OtherUser.FirstName
-            </td>
-            <td>
-                @{int age = new DateTime(DateTime.Now.Subtract(Model.OtherUser.DateOfBirth).Ticks).Year - 1;}
-                @age år
-            </td>
-            <td>
-                @Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)
-            </td>
-            <td>
-                @Html.ActionLink("Passar vi ihop?", "MatchControl", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)      
-            </td>
-            
-        </tr>
-
-    </table>
+    <div class="col-md-3">
+        <br />
+        <ul>
+            <li>@Html.ActionLink("Passar vi ihop?", "MatchControl", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)</li>
+            <li>@Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)</li>
+        </ul>
+    </div>
 </div>
+<hr />
 
-<div>
-
-    Intressen
-
-    <table class="table">
-
+<div class="row">
+    <div class="col-md-6">
+        <h3>Intressen:</h3>
         @foreach (var i in Model.OtherUserInterests)
         {
-            <tr>
-                <td>
-                    @i
-                </td>
-            </tr>
+            <p>@i</p>
         }
-    </table>
-</div>
-
-<div>
-    @Html.Partial("Posts")
+    </div>
+    <div class="col-md-6">
+        <h3>Meddelanden:</h3>
+        @Html.Partial("Posts")
+    </div>
 </div>

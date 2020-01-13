@@ -1,12 +1,11 @@
 ﻿
-<div class="message-list" id="messagelist"></div>
-
-
-
 <form class="message-form">
     <input type="hidden" id="user-id" value="@ViewBag.Id" />
     <input type="hidden" id="user-myid" value="@ViewBag.MyId" />
     <textarea id="new-message"></textarea>
     <button type="button" id="send-button">Skicka meddelande</button>
 </form>
+
+<div class="message-list" id="messagelist"></div>
+
 @Scripts.Render("~/Scripts/posts.js")
