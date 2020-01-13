@@ -24,12 +24,17 @@ function updateMessageList() {
 
                     $('#messagelist')
                         .append(
-                            `<article class="message">
-                                    <header class="header">
-                                        <h6>Skrivet av användare:  ${post.WrittenBy}, ${post.Datum} </h6>
-                                    </header>
-                                    <main class="body">${post.Text}</main>
-                                </article>`
+                            `<hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6>Skrivet av användare:  ${post.WrittenBy}, ${post.Datum} </h6>                                                      
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">                                          
+                                    <p>${post.Text}</p>
+                                </div>
+                            </div>`
                         );
                 });
             }
