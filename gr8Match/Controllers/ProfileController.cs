@@ -85,9 +85,8 @@ namespace gr8Match.Controllers
                 var viewModel = new MyProfileViewModel
                 {
                     MyUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-
                     MyInterests = ctx.Database.SqlQuery<string>("Select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
-                    MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).ToList()
+                    MyPosts = ctx.Posts.Where(i => i.WrittenTo == id).OrderByDescending(d => d.Datum).ToList()
                 };
                 return View(viewModel);
             }
@@ -546,7 +545,6 @@ namespace gr8Match.Controllers
                 Console.WriteLine(e.Message);
                 return View("Error");
             }
-
         }
 
         public static string GetCategory(int Id, string identityId)
