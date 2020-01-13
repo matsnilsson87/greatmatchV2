@@ -6,11 +6,14 @@ using Microsoft.AspNet.Identity;
 using gr8Match.Models;
 using System.Xml.Serialization;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.Diagnostics;
 
 namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
     {
+        private FileMode Open;
 
 
         // GET: User
@@ -634,16 +637,21 @@ namespace gr8Match.Controllers
                 var ctx = new Gr8DbContext();
                 List<User> userList = new List<User>();
                 userList = ctx.Database.SqlQuery<User>("select * from Users where Id =" + id).ToList();
-
-
+                string downloadsPath = KnownFolders.Downloads.Path;
+                Debug.WriteLine(downloadsPath);
+               
 
                 if (userList != null)
                 {
+                    
                     var path = Server.MapPath(@"~/Images/MyProfile.xml");
                     XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
                     TextWriter myWriter = new StreamWriter(path, true);
                     mySerializer.Serialize(myWriter, userList);
+
+             
                     myWriter.Close();
+                    saveLocal();
 
                 }
 
@@ -654,7 +662,19 @@ namespace gr8Match.Controllers
                 Console.WriteLine(e.Message);
                 return View("Error");
             }
+
+        }
+
+        public void saveLocal() {
+            var date = DateTime.Now;
+            string filename = "MyProfile.xml";
+            string filesource = Server.MapPath("~/Images/") + filename; // server file "KT_page.xml" available in server directory "files"
+            FileInfo fi1 = new FileInfo(filesource);
+            string filedest = KnownFolders.Downloads.Path + "/MyCatProfile.xml";
+            fi1.CopyTo(filedest,true);
+
         }
     }
+
 }
 
