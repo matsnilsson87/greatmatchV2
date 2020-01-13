@@ -28,7 +28,19 @@
         <br />
         <ul>
             <li>@Html.ActionLink("Passar vi ihop?", "MatchControl", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)</li>
-            <li>@Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)</li>
+            @if (Model.FriendControl > 0)
+            {
+              
+            }
+            else if (Model.FriendRequestControl > 0)
+            {
+                <li><p>Det finns en vänförfrågan som inte är accepterad</p></li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Skicka vänförfrågan", "FriendRequest", "Profile", routeValues: new { @Model.OtherUser.Id }, htmlAttributes: null)</li>
+            }
+            
         </ul>
     </div>
 </div>

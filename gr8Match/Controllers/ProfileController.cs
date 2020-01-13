@@ -363,9 +363,11 @@ namespace gr8Match.Controllers
                 var viewModel = new OtherProfileViewModel
                 {
                     OtherUser = ctx.Users.Where(i => i.Id == id).FirstOrDefault(),
-                    OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList()
+                    OtherUserInterests = ctx.Database.SqlQuery<string>("select Name from Interests join UserInterests on UserInterests.Interest=Interests.Id where UserInterests.UserId ='" + id.ToString() + "'").ToList(),
+                    FriendControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'True'").Sum(),
+                    FriendRequestControl = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + id + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + id + " and Accepted = 'False'").Sum()
 
-                };
+            };
                 ctx.Database.ExecuteSqlCommand("Insert into Visitors Values (" + myId + ", " + id + ", '" + time + "')");
                 ctx.SaveChanges();
                 return View(viewModel);

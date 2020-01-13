@@ -11,7 +11,11 @@ namespace gr8Match.Models
 
         public List<string> OtherUserInterests { get; set; }
 
-      
+        public int FriendControl { get; set; }
+
+        public int FriendRequestControl { get; set; }
+
+
 
         public OtherProfileViewModel()
         {
