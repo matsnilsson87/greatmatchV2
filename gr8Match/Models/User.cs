@@ -14,12 +14,12 @@ namespace gr8Match.Models
         public int Id { get; set; }
 
         [Display(Name = "Förnamn")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Du kan bara använda bokstäver")]
+        [RegularExpression(@"^[a-zåäöA-ZÅÄÖ\-]+$", ErrorMessage = "Du kan bara använda bokstäver")]
         [Required(ErrorMessage = "Du måste fylla i ett förnamn")]
         public string FirstName { get; set; }
 
         [Display(Name = "Efternamn")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Du kan bara använda bokstäver")]
+        [RegularExpression(@"^[a-zåäöA-ZÅÄÖ]+$", ErrorMessage = "Du kan bara använda bokstäver")]
         [Required(ErrorMessage = "Du måste fylla i ett efternamn")]
         public string LastName { get; set; }
 
