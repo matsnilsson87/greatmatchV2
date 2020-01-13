@@ -3,11 +3,14 @@
     ViewBag.Title = "Alla Användare";
 }
 
-@using (Html.BeginForm("SearchBar", "Profile", FormMethod.Get))
-{
-    @Html.TextBox("search")
-    <input type="submit" value="Sök" />
-}
+    <br />
+    <div>
+        @using (Html.BeginForm("SearchBar", "Profile", FormMethod.Get))
+        {
+            @Html.TextBox("search")
+            <input type="submit" value="Sök" />
+        }
+    </div>
 
 <table class="table table-striped">
     <thead>
