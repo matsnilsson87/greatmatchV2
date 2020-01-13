@@ -666,11 +666,12 @@ namespace gr8Match.Controllers
         }
 
         public void saveLocal() {
+            var date = DateTime.Now;
             string filename = "MyProfile.xml";
             string filesource = Server.MapPath("~/Images/") + filename; // server file "KT_page.xml" available in server directory "files"
             FileInfo fi1 = new FileInfo(filesource);
             string filedest = KnownFolders.Downloads.Path + "/MyCatProfile.xml";
-            fi1.CopyTo(filedest);
+            fi1.CopyTo(filedest,true);
 
         }
     }
