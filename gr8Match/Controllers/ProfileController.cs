@@ -12,7 +12,7 @@ using System.Diagnostics;
 namespace gr8Match.Controllers
 {
     public class ProfileController : Controller
-    {        
+    {
         [HttpGet]
         public ActionResult AddUser()
         {
@@ -46,7 +46,7 @@ namespace gr8Match.Controllers
             }
 
         }
-        
+
         //Hämtar ID på den användare som är inloggad.
         public int ThisUser()
         {
@@ -323,6 +323,8 @@ namespace gr8Match.Controllers
                 return View("Error");
             }
         }
+
+        //Körs när man trycker på "Avregistrera konto" i InactivateAccount viewn.
         public ActionResult Deactivate()
         {
             try
@@ -357,6 +359,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Profilsidan som visas när man går in på någon annans profilsida.
         public ActionResult OtherProfile(int id)
         {
             try
@@ -383,6 +386,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Kollar om användaren man är inne på har samma intressen som sig själv, då är det en match.
         public ActionResult MatchControl(int id)
         {
             try
@@ -419,8 +423,6 @@ namespace gr8Match.Controllers
                                                         .ToList(),
                     FriendsRequests = ctx.Database.SqlQuery<User>("Select * From Users Where Users.Id in (Select FromUser From FriendRequests Where ToUser in (Select Id From Users Where IdentityID = '" + id + "' and Accepted = 'False')) and Active = 'True' order by FirstName")
                                                         .ToList()
-
-                    // denna kommentar vill man ha
                 };
                 return View(viewModel);
             }
@@ -431,6 +433,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Söker igenom alla användare för att leta efter dem som har samma intressen, då är det en match.
         public ActionResult MatchSearch()
         {
             try
@@ -451,7 +454,7 @@ namespace gr8Match.Controllers
             }
         }
 
-
+        //Söka efter alla användare på deras namn.
         public ActionResult SearchBar(string search)
         {
             try
@@ -520,27 +523,10 @@ namespace gr8Match.Controllers
                 int myId = ThisUser();
                 int friendId = Id;
                 var ctx = new Gr8DbContext();
-                int friends = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'True' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'True'").Sum();
-                int friendRequest = ctx.Database.SqlQuery<int>("Select Count(*) From FriendRequests Where FromUser = " + myId + " and ToUser = " + friendId + " and Accepted = 'False' or ToUser = " + myId + " and FromUser = " + friendId + " and Accepted = 'False'").Sum();
 
-                if (friends > 0)
-                {
-                    //meddela att ni redan är vänner
-                    return RedirectToAction("MyFriends", "Profile");
-                }
-
-                else if (friendRequest > 0)
-                {
-                    //meddela att det finns en vännförfrågan som inte är godkänd
-                    return RedirectToAction("MyFriends", "Profile");
-                }
-
-                else
-                {
-                    ctx.Database.ExecuteSqlCommand("Insert into FriendRequests values(" + myId + ", " + friendId + ", 'False') ");
-                    ctx.SaveChanges();
-                    return RedirectToAction("MyFriends", "Profile");
-                }
+                ctx.Database.ExecuteSqlCommand("Insert into FriendRequests values(" + myId + ", " + friendId + ", 'False') ");
+                ctx.SaveChanges();
+                return RedirectToAction("MyFriends", "Profile");
             }
             catch (Exception e)
             {
@@ -572,6 +558,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Fyller kategorilistan med kategorier.
         public ActionResult AddCategory(int Id)
         {
             try
@@ -592,6 +579,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Lägger till vald kategori på vald användare.
         public ActionResult AddCategories(int Id, int friendId)
         {
             try
@@ -628,6 +616,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Sparar ner profilsidan som XML.
         public ActionResult SaveAsXML()
         {
             try
@@ -639,17 +628,17 @@ namespace gr8Match.Controllers
                 userList = ctx.Database.SqlQuery<User>("select * from Users where Id =" + id).ToList();
                 string downloadsPath = KnownFolders.Downloads.Path;
                 Debug.WriteLine(downloadsPath);
-               
+
 
                 if (userList != null)
                 {
-                    
+
                     var path = Server.MapPath(@"~/Images/MyProfile.xml");
                     XmlSerializer mySerializer = new XmlSerializer(typeof(List<User>));
                     TextWriter myWriter = new StreamWriter(path, true);
                     mySerializer.Serialize(myWriter, userList);
 
-             
+
                     myWriter.Close();
                     saveLocal();
 
@@ -665,13 +654,15 @@ namespace gr8Match.Controllers
 
         }
 
-        public void saveLocal() {
+        //Kopierar XML filen från servern till användarens "Download" Map lokalt.
+        public void saveLocal()
+        {
             var date = DateTime.Now;
             string filename = "MyProfile.xml";
             string filesource = Server.MapPath("~/Images/") + filename; // server file "KT_page.xml" available in server directory "files"
             FileInfo fi1 = new FileInfo(filesource);
             string filedest = KnownFolders.Downloads.Path + "/MyCatProfile.xml";
-            fi1.CopyTo(filedest,true);
+            fi1.CopyTo(filedest, true);
 
         }
     }

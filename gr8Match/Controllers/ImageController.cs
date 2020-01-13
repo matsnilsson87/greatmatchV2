@@ -12,7 +12,7 @@ namespace gr8Match.Controllers
     public class ImageController : Controller
     {
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult AddImage()
         {
             try {
                 return View();
@@ -24,6 +24,7 @@ namespace gr8Match.Controllers
             }
         }
 
+        //Hämtar ID på den som är inloggad.
         public int ThisUser()
         {
 
@@ -46,7 +47,7 @@ namespace gr8Match.Controllers
 
 
         [HttpPost]
-        public ActionResult Add(Image image)
+        public ActionResult AddImageForm(Image image)
 
         {
             try

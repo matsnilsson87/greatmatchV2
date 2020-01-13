@@ -286,8 +286,8 @@
     <Content Include="Views\Profile\AddUser.cshtml" />
     <Content Include="Views\Profile\AddUserInfoForm.cshtml" />
     <Content Include="Views\Profile\MyFriends.cshtml" />
-    <Content Include="Views\Image\Add.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Image\AddImageForm.cshtml" />
+    <Content Include="Views\Image\AddImage.cshtml" />
     <Content Include="Views\Profile\MyProfile.cshtml" />
     <Content Include="Views\Profile\NewFriendRequests.cshtml" />
     <Content Include="Views\Profile\SearchBar.cshtml" />

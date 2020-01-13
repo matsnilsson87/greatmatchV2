@@ -1,12 +1,12 @@
 ﻿@model gr8Match.Models.Image
 
-@using (Html.BeginForm("Add", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddImageForm", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
 
     <div class="form-horizontal">
-        <h4>Image</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
