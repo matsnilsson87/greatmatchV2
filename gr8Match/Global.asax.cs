@@ -20,9 +20,7 @@ namespace gr8Match
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer(
-                new DropCreateDatabaseIfModelChanges<Gr8DbContext>()
-                );
+            
         }
 
     }
